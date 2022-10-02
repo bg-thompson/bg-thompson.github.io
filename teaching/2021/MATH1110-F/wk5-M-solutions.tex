@@ -1,0 +1,91 @@
+\documentclass[12pt,a4paper]{article}
+\title{MATH1110 Lec 009 Week 5-M}
+\author{Benjamin Thompson}
+\date{September 20, 2021}
+
+\usepackage{amsmath}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhf{}
+\lhead{MATH1110 Sec 009}
+\chead{Week 5-M}
+\rhead{September 20, 2021}
+\cfoot{\thepage}
+
+
+\begin{document}
+\section*{Problems}
+Are the following functions equal? Justify your answers. In particular, if the functions are not equal, prove this by finding a point in the domain where the functions take different values.
+
+\begin{enumerate}
+    \item $f(x) = x^2 - 2x - 8, \qquad g(x) = (x+4)(x-2)$.
+    \item $f(x) = x^2 - 2x - 3, \qquad g(x) =  (x+1)(x-3)$.
+    \item $f(x) = x^2 + 1, \qquad g(x) = (x + 1)^2$.
+    \item $f(x) = x^3 - 8, \qquad g(x) =  (x-2)^3$.
+    \item $f(x) = \sqrt[3]{x^3 + 3x^2 + 3x + 1}, \qquad g(x) = x + 1$.
+    \item $f(x) = \sqrt[3]{x^3 + 1}, \qquad g(x) = \sqrt[3]{x^3} + \sqrt[3]{1}$.
+    \item $f(x) = \sin 2x, \qquad g(x) = 2\sin x$.
+    \item
+       \[ f(x) = x^3 - x^2 - x + 1, \qquad g(x) = \begin{cases} 
+          (x^4 - 2x^2 + 1)/(x+1) & x \ne -1 \\
+          0 & x = -1.
+       \end{cases}
+    \]
+    \item
+       \[ f(x) = x^2 + 2, \qquad g(x) = \begin{cases} 
+          (x^3 - 1)/(x-1) & x \ne 1 \\
+          3 & x = 1
+       \end{cases}.
+    \]
+       \[ f(x) = x^4 + x^3 + x^2 + x + 1, \qquad g(x) = \begin{cases} 
+          (x^5 - 1)/(x-1) & x \ne 1 \\
+          5 & x = 1
+       \end{cases}.
+    \]
+    \item $f(x,y) = x^2 - y^2, \qquad g(x,y) = (x-y)(x+y).$
+    \item $f(x,y) = (x-y)^2(x+y)^2, \qquad g(x,y) = x^4 - y^4.$
+    \item $f(x,y) = 10^x + 10^y, \qquad g(x,y) = 10^{x + y}$.
+    \item $f(x,y) = \frac{1}{x+y}, \qquad g(x,y) = \frac{1}{x} + \frac{1}{y}.$
+    \item $f(x,y) = \cos(x+y), \qquad g(x,y) = \cos x + \cos y.$
+    \item $f(x,y,z) = (x + y)^z, \qquad g(x,y,z) = x^z + y^z.$
+\end{enumerate}
+
+\newpage
+
+\section*{Solutions}
+
+\begin{enumerate}
+	\item $f(1) = -9 \ne -5 = g(1)$, so $f \ne g$.
+	\item Expanding $(x+1)(x-3)$ gives $x^2 - 2x - 3$, so $f = g$.
+	\item $f(2) = 5 \ne 9 = g(2)$, so $f \ne g$.
+	\item $f(1) = -7 \ne -1 = g(1)$, so $f \ne g$.
+	\item $x^3 + 3x^2 + 3x + 1 = (x+1)^3$, so
+
+\[
+	f(x) = \sqrt[3]{x^3 + 3x^2 + 3x + 1} = \sqrt[3]{(x+1)^3} = x + 1 = g(x).
+\]
+	\item $f(1) = \sqrt[3]{2} \ne 2 = g(1)$, so $f \ne g$.
+	\item $f(\pi/2) = 0 \ne 2 = g(\pi/2)$, so $f \ne g$.
+	\item Note that
+\[
+ x^4 - 2x^2 + 1 = (x^2 - 1)^2 = \left( (x+1)(x-1) \right)^2 = (x+1)^2(x-1)^2.
+\]
+So when $x \ne -1$,
+\[
+\frac{x^4 - 2x^2 + 1}{x + 1} = (x+1)(x-1)^2 = (x^2 - 1)(x-1) = x^3 - x^2 - x + 1,
+\]
+meaning $f(x) = g(x)$ for $x \ne -1$. When $x = -1$, $f(-1) = (-1)^3 - (-1)^2 - (-1) + 1 = 0 = g(0)$. Therefore $f$ and $g$ agree at all points in their domain, so $f = g$.
+	\item \begin{enumerate}
+			\item $f(2) = 6 \ne 7 = g(2)$, so $f \ne g$.
+			\item Dividing $x^5 - 1$ by $x -1$ shows that $(x-1)(x^4 + x^3 + x^2 + x + 1) = x^5 - 1$. Hence $f(x) = g(x)$ for $x \ne 1$, and when $x = 1$, $f(1) = 5 = g(1)$. Therefore $f =g$.
+			\end{enumerate}
+	\item Expanding $(x-y)(x+y)$ shows that $f = g$.
+	\item $f(2,1) = 1^2 \cdot 3^2 = 9 \ne 15 = 2^4 - 1^4 = g(2,1)$, so $f \ne g$.
+	\item $f(0,1) = 10^0 + 10^1 = 1 + 10 = 11 \ne 10 = g(0,1)$, so $f \ne g$.
+	\item $f(-2,4) = \frac{1}{2} \ne -\frac{1}{4} = g(-2,4)$, so $f \ne g$.
+	\item $f(0,0) = 1 \ne 2 = g(0,0)$, so $f \ne g$.
+	\item $f(1,1,2) = 2^2 = 4 \ne 2 = 1^2 + 1^2 = g(1,1,2)$, so $f \ne g$.
+\end{enumerate}
+
+\end{document}

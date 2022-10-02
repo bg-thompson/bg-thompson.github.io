@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Symbiosis</title>
+    <link rel="stylesheet" type="text/css" href="./../../../style.css">
+    <link rel="icon" href="./../../../temp-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../../../index.html">Home</a></li>
+          <li><a href="./../../../research/research.html">Research</a></li>
+          <li><a href="./../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <hr>
+      <h1>Symbiosis (2021)</h1>
+      <hr>
+
+      <div style="text-align: center;">
+        <a href="https://indreams.me/dream/mAmPuNPdNXV" target="_blank"><img src="symbiosis-cover.jpg" width="400"></a>
+        <p><a href="https://indreams.me/dream/mAmPuNPdNXV" target="_blank">Available on <em>Dreams</em></a> (PS4)</p>
+        <!-- archive link: http://web.archive.org/web/20210716153120/https://indreams.me/dream/mAmPuNPdNXV -->
+      </div>
+      <hr>
+      <ul>
+        <li>A <a href="https://www.youtube.com/watch?v=e3_JI944SbI">walkthrough</a> I recorded of the game.</li>
+      </ul>
+      <hr>
+      <p>First written: 2022.03.02
+
+      <p>One of my favourite moments when playing Thekla's <em><a href="https://en.wikipedia.org/wiki/The_Witness_(2016_video_game)">The Witness</a></em> was coming across puzzles with new symbols. The symbols are never explained in writing, so you come to an understanding of what they mean using a combination of the scientific method and trial and error as you play.</p>
+
+      <p><em>The Witness</em> is more interested in exploring the variations of puzzles that exist from combining a limited set of rules rather than exploring the possibility space of the rules per se, and to great effect, since the result is one of the best puzzle games ever created. But this made me wonder, what would what it be like to play a game where most of the game was figuring out patterns?</p>
+
+      <p>Moreover, what if these patterns were based on actual mathematical ideas. Could I introduce people to mathematical concepts through an abstract game? Thus <em>Symbiosis</em> was borne.</p>
+
+      <p>Below are some of the mathematical ideas I tried to introduce and discuss in the game. These are screenshots from the <em>ending</em> (the walkthrough link above shows what most of the game is like), where I provide more context about the mathematics behind the rules. I also explain the rules directly in the ending, in case the player had not been able to figure out a particular rule.</p>
+
+      <div style="text-align: center;">
+        <img src="symb1.jpg" width="400">
+      </div>
+
+      <p>One of the ideas I wanted to convey from set theory was that the integers are equivalence classes of pairs of positive whole numbers where (a,b) = (c,d) if and only if a + d = b + c. Doing this would require an visual representation of two integers which could easily be achieved by having two types of symbol. By then creating puzzles which ask the player to calculate the difference between the number of diagonal crosses and horizontal crosses, I could demonstrate this idea to the player without having to use any mathematical notation or verbal language.</p>
+
+      <div style="text-align: center;">
+        <img src="symb3.jpg" width="400">
+      </div>
+
+      <p>I wanted to communicate an important concept from analysis too: the diameter of a set. This is a concept which can be summarized in a sentence "the largest possible distance across all pairs of points in the set. This idea is used in the proofs of a huge number of results in analysis. But I wanted players to come to an understanding of the concept themselves rather than being told what it is.</p>
+
+      <p>Interestingly, when I watched people stream the game on Twitch, many people didn't figure out the concept. Most players seemed to think the dot puzzles were about the biggest gap in the collection of dots rather than the largest overall distance. They of course recognized that their 'biggest gap rule' didn't work on a couple of puzzles &mdash; my attempts to tell the players that the puzzles were actually not about gaps! But they were able to brute-force their way through these puzzles (an intentional design choice since I didn't want any particular puzzle massively blocking progress) and so moved on.</p>
+
+      <p>I'm not surprised that many players did not understand the rule. While the concept of the diameter of a set is known by any decent mathematician, the idea is not really encountered in everyday life. I also don't know of any other puzzle game which uses this idea, so I think that for most players this was the first time they were encountering the idea in a game.</p>
+
+      <div style="text-align: center;">
+        <img src="symb2.jpg" width="400">
+      </div>
+
+      <p>I wanted to convey some geometric concepts, so I included an idea I thought was simple: the number of different types of triangle. I thought this wouldn't be too difficult for players to figure out, but many people spent a fair amount of time on it!</p>
+
+      <p>The notion of equivalence is fundamental in mathematics, so once players understood this rule, they had understood "consider two triangles the same if there is a plane translation taking one to the other" (but just not in those words).</p>
+
+      <p>Understanding an abstract pattern once you've digested a rough description of it is several orders of magnitude easier that trying to formulate an underlying pattern on your own. Every mathematician knows this difference to the bone (it's a large part of mathematics!), so I was happy to see my triangle puzzles evoking similar feelings, even for an idea as simple as equivalence.</p>
+
+      <div style="text-align: center;">
+        <img src="symb4.jpg" width="400">
+      </div>
+
+      <p>My favourite area of mathematics is topology, so I had to include a topological notion for players to figure out. I think the size of the panels I went with (a design constraint primarily due to the game engine I used, <em>Dreams</em>) meant that communicating something like the fundamental group would have been next-to-impossible, so I instead opted to play around with the notion of connectedness.</p>
+
+      <p>I added my own spin on it, of course. In the first series of square puzzles, two squares were part of the same connected region if and only if there was a path between them where adjacent squares in the path were either horizontal or vertical to one another. In the second series of square puzzles diagonally adjacent squares were considered connected.</p>
+
+      <p>I think this was the hardest concept for players to understand, but then topology is a hard subject. Some players conjectured that the rule was to select panels where the squares were spread out, but this idea failed to solve the 'boss' puzzles I put in. Still, I was happy to have found a way to turn the idea of connectedness into a puzzle, since it is a critical idea in topology.</p>
+
+      <p>Overall, making a puzzle game which aimed to communicate mathematical ideas via puzzles was a great exercise. I made the game in <em>Dreams</em> both so that I could quickly make something, easily share it with the world, and in the process come to a deep understanding of what it's like to push the envelope of what games are possible to make in <em>Dreams</em>.</p>
+
+      <p>As I discovered however, making a 3D puzzle game on <em>Dreams</em> was often infuriating. This was primarily due to the constraints <em>Dreams</em> imposes on almost all aspects of creation, which in turn <em>heavily</em> influenced the kind of puzzles I could make and the world they were in. If I was making the game on a PC, the puzzles would be completely different, but this was a compromise since otherwise it would have taken thousands of hours to make the game, which is a silly amount of time to spend on an exercise. As a creation tool, <em>Dreams</em> is amazing for making 3D platformers, but much less so for abstract puzzle games!</p>
+
+      <p>The design constraints the game engine ultimately induced on the game meant I was unhappy with the final game, but I'm still happy I went through the process of making it. I learned a huge amount in the process, most of which I wouldn't have been able to learn had I not tried to make something big in the software.</p>
+
+      <p>By making <em>Symbiosis</em>, I think I've come up with a collection of ideas rooted in pure mathematics which can be used as the basis for a pen and paper puzzle game. Think Sudoku, but actually interesting and non-trivial because the logic uses ideas from geometry and topology. I've put the task of creating these pen and paper puzzles on ice for now, but I want to revisit the idea in the future.</p>
+
+      <p>It turns out I wasn't the only person interested in trying to communicate abstract ideas in a puzzle game though.</p>
+
+      <p><a href="https://store.steampowered.com/app/1299400/Understand/"><em>Understand</em></a> is a game where the entire point is to try and figure out abstract patterns. Luckily, I didn't find out about <em>Understand</em> until after I had nearly finished <em>Symbiosis</em>; if I had learnt about the game earlier I probably would have never tried to make my version of the game! I certainly wouldn't have made a game with a several-hour runtime and over 112 puzzle panels. But then I wouldn't have discovered that:</p>
+      <ul>
+        <li>3D games are at least an order of magnitude more difficult to make than 2D games.</li>
+        <li>A game engine which is not your own inherently places huge, tangible, and unexpected design constraints on any interesting idea.</li>
+        <li>There is lots of potential to convey non-trivial concepts from pure mathematics through puzzles, although this is very difficult, and doing so effectively is outrageously difficult!</li>
+      </ul>
+      <hr>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2022.</p>
+    </footer> 
+  </body>
+</html>

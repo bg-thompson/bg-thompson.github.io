@@ -1,0 +1,79 @@
+<!-- Used to launch Flipbox version 0.3.1, copywrite Benjamin Thompson 2016-2018. Requires javascript to be enabled. -->
+<!DOCTYPE html>
+<html>
+<head>
+	<title>FlipBox 0.3.1</title>
+	<link rel="icon" href="flip-fami.png">
+	<meta charset="utf-8">
+	<script language = "javascript" type="text/javascript" src = "levels.js"></script>
+	<!-- The levels are in the file above, this is loaded first so the javascript below can use it. -->
+
+	<!-- js code influencing the html / size of the game -->
+	<script type="text/javascript">
+	var isTextYellow = false;
+	function changeBackground(color) {
+		document.body.style.color = color;
+	}
+	document.addEventListener("keydown", handleKeyPress1);
+	function handleKeyPress1(keyEvent) {
+		if(keyEvent.key == "v") {
+			if(isTextYellow) {
+				changeBackground('yellow');
+			} else {
+				changeBackground('black');
+			}
+			isTextYellow = !isTextYellow;
+		}
+	}
+
+	</script>
+	<script language = "javascript" type="text/javascript" src = "flipbox.js"></script>
+	<style type="text/css">
+
+		#displayCanvas {
+			position: relative;
+			width: 384px; /* Defaults; the width and height are set dynamically in the flipbox.js code */
+			height: 384px;
+		}
+		#displayCanvas > canvas {
+			position: absolute;
+			/*left: 10px;*/
+			/*top: 100px;*/
+		}
+		#character { z-index: 3 }
+		#blocks { z-index: 2 }
+		#background { z-index: 1 }
+		body {
+			background-color: black;
+			color: #ffff00;
+			/*text-align: center;*/
+			font-size: 12px;
+			/*margin: auto;*/
+		}
+	</style>
+</head>
+<body onload="init();">
+
+<div id="wrapper" style="width:640px; margin: auto ;">
+
+<h1>FlipBox</h1>
+<div id="displayCanvas">
+	<canvas id="character" tabindex="1"></canvas>
+	<canvas id="blocks"></canvas>
+	<!-- Note, the canvas above cannot have the moz-opaque tag! -->
+	<canvas id="background"></canvas>
+	<!-- <canvas id="background" moz-opaque></canvas> -->
+</div>
+
+<br>
+
+<p>A Basic 2D puzzle game. Press H to display help dialog. Press V to toggle visibility of this text.</p>
+
+<p>FlipBox version 0.3.1 copywrite Benjamin Thompson, 2016-2018. Requires javascript and mouse.</p>
+
+
+</div>
+<!-- end of wrapper div -->
+
+</body>
+</html>

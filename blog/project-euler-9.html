@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>A solution to Project Euler problem 9 using only elementary algebra</title>
+    <link rel="stylesheet" type="text/css" href="./../style.css">
+    <link rel="icon" href="./../temp-icon.png">
+
+    <!-- The KaTeX .css and .js files linked below are available from: https://github.com/KaTeX/KaTeX/releases -->
+    <!-- KaTeX was created by Emily Eisenberg and Sophie Alpert, and is released under the MIT License. -->
+    <!-- The MIT license for KaTeX is available at: https://github.com/KaTeX/KaTeX/blob/main/LICENSE -->
+    <!-- Load KaTeX functions for math formatting, v0.16.2, released 2022-08-29. -->
+    <link rel="stylesheet" href="./../katex/katex.min.css">
+    <script defer src="./../katex/katex.min.js"></script>
+    <script defer src="./../katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- End of KATEX functions for math formatting. -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../index.html">Home</a></li>
+          <li><a href="./../research/research.html">Research</a></li>
+          <li><a href="./../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>A solution to Project Euler problem 9 using only elementary algebra</h1>
+      <p>Date written: 2021.07.28</p>
+
+      <p>Near the beginning of the year I started programming in (8-bit) <a href="https://en.wikipedia.org/wiki/Atmel_AVR_instruction_set">Atmel AVR assembler</a>. I used the problems on <a href="https://projecteuler.info/problems">Project Euler</a> as goals of things to program.</p>
+      
+      <p>These problems are mathematics-oriented, and have very concrete goals. For example:</p>
+      
+      <figure>
+        <blockquote>
+          <p><a href="https://projecteuler.info/problem=9">Problem 9</a>: Find (the unique) positive integers \( a, b, c \) such that \(a^2 + b^2 = c^2 \) and \( a + b + c = 1000 \).</p>
+        </blockquote>
+      </figure>
+      
+      <p>Such a problem is trivial to solve in the vast majority of programming languages... but not the case in 8-bit assembler! For example, this <a href="project-euler-2-solution.asm">.asm</a> text file is my Atmel AVR assembler code for solving <a href="https://projecteuler.info/problem=2">Problem 2</a>, calculating the sum of even Fibonacci numbers below 8 million. If you browse the file, you will see that programming in Atmel AVR assembler is significantly more involved than programming in python!</p>
+
+      <p>Recently I looked at my code for Problem 9 &mdash; the second Project Euler question I had solved &mdash; and noticed that my code for it was quite long and most likely inefficient (it took 3,041,688 cycles to get the solution)! I tried redoing it using algebra to significantly simplify the calculation... and in the process of simplification the answer popped out!</p>
+      
+      <p>Below I present how I solved this problem without needing to use a computer at all.</p>
+      
+      <p>First, use the condition \( a + b + c = 1000 \) to reduce the two equations to the single equation \( a^2 + b^2 = (1000 - a - b)^2 \). Using high-school algebra, this simplifies to
+        $$
+        \begin{equation}
+        1000(a + b - 500) = ab.
+        \end{equation}
+        $$</p>
+      
+      <p>This already offers insight: the left hand side is even, so at least one of \(a, b\) must be even too. But we can do much better: the left hand side is divisible by a power of 10, so surely at least one of \(a ,b \) is divisible by 10 too?</p>
+      
+      <p>If this was the case, we would effectively reduce the number of pairs \( a, b \) we need to check by an order of magnitude, which is a significant saving and so probably worth doing. We can try to prove at least one of the numbers is divisible by 10 by assuming the opposite and checking that the equation has no solutions in this case.</p>
+      <p>In particular, if neither \(a \) nor \( b \) were divisible by 10, then one is a multiple of \( 5^3 = 125 \), by virtue of the left hand side being divisible by 125 and the <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_arithmetic">Fundamental theorem of arithmetic</a>. The assumptions of the problem imply \( 1 \lt a, b \lt 500 \). So let \( a \) is a multiple of 125. Then there are only three possible choices for \( a = 125n \), and it is elementary to check if these are solutions by hand:</p>
+      
+      <p>Substituting \( a = 125 n \) into equation (1) and simplifying gives
+        $$
+        b = \frac{1000(4-n)}{8-n}.
+        $$
+        When \( n = 1,2,3 \), we get \( b = 3000/7, 2000/6, 1000/5 \). Surprisingly, the last of these is actually an integer! So \( n = 3 \) gives \( (a,b) = (375, 200)\)... and hence \( (a,b,c) = (375, 200, 425) \). By construction this satisfies the conditions so we're done before we had program by hand in assembler!</p>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2021 &mdash; 2022.</p>
+    </footer> 
+  </body>
+</html>

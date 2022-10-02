@@ -1,0 +1,74 @@
+\documentclass[12pt,a4paper]{article}
+\title{MATH1110 Lec 009 Week 5-W}
+\author{Benjamin Thompson}
+\date{September 22, 2021}
+
+\newcommand{\rar}{\rightarrow}
+
+\usepackage[left=1.5cm,right=1.5cm,top=1.5cm,bottom=1.5cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhf{}
+\lhead{MATH1110 Sec 009}
+\chead{Week 5-W}
+\rhead{September 22, 2021}
+\cfoot{}
+
+\begin{document}
+\section*{Practice Quiz and Solutions}
+\subsection*{Problems}
+\begin{enumerate}
+    \item Does $(x^3 + y^3)^{1/3} = x + y$ for all $x,y$?
+    
+    \item Does $p(x) = q(x)$, where $p(x) = (x-1)(x+2)(x-3)(x+4)$, and $q(x) = x^4 + 2 x^3 - 13 x^2 - 14 x + 26$?
+    
+    \item Expand and simplify $f(x,y) = (x - y)(x^3 + x^2y + xy^2 + y^3)$.
+    
+    \item Evaluate
+    \[
+        \lim_{x \rightarrow 2} \frac{x^4 - 16}{x-2}
+    \]
+    if it exists. If it does not, explain why.
+    
+    \item Can $k$ be chosen so that
+    \[
+    f(x) = \begin{cases}
+        (x^4 - 16)/(x-2) & x \ne 2 \\
+        k               & x = 2
+    \end{cases}
+    \]
+    is continuous? If so, what value? If not, why?
+\end{enumerate}
+
+\subsection*{Solutions}
+\begin{enumerate}
+	\item Let $(x,y) = (1,1)$. Then $(x^3 + y^3)^{1/3} = (1^3 + 1^3)^{1/3} = 2^{1/3} \ne 2 = 1 + 1$, so it is not the case that the $(x^3 + y^3)^{1/3} = x + y$ holds for all $x,y$.
+	\item Note that $p(0) = (-1)(2)(-3)(4) = 24 \ne 26 = q(0)$, so $p \ne q$.
+	\item We have
+\begin{equation*}
+\begin{split}
+	(x - y)(x^3 + x^2y + xy^2 + y^3) &= x(x^3 + x^2y + xy^2 + y^3) - y(x^3 + x^2y + xy^2 + y^3) \\
+		&=x^4 + x^3y + x^2y^2 + xy^3 - x^3y - x^2y^2 - xy^3 - y^4 \\
+		&=x^4 - y^4.
+\end{split}
+\end{equation*}
+So in fact $f(x,y) = x^4 - y^4$.
+	\item Note that $x^4 - 16 = x^4 - 2^4 = f(x,2)$, where $f(x,y)$ is the function in the previous question. We can therefore use the algebraic identity in the previous question to simplify this rational function:
+\[
+	\frac{x^4 - 16}{x - 2} = \frac{(x-2)(x^3 + 2x^2 + 4x + 8)}{x-2} = x^3 + 2x^2 + 4x + 8.
+\]
+Hence
+\[
+	\lim_{x \rar 2}\frac{x^4 - 16}{x-2} = \lim_{x \rar 2} (x^3 + 2x^2 + 4x + 8) = (2)^3 + 2(2)^2 + 4(2) + 8 = 32.
+\]
+	\item The function $(x^4 - 16)/(x-2)$ is a rational function, so it is continuous (cts) at all points where it is defined, i.e. when $x \ne 2$. Therefore $f(x)$ will be cts everywhere if and only if it is cts at $x = 2$.
+
+In order to be cts at $x = 2$, we need $f(2) = \lim_{x \rar 2}f(x)$. We computed this limit in the previous question. Hence in order to be cts, we need $k = f(2) = \lim_{x \rar 2}(x^4 - 16)/(x-2) = 32$. So we can choose $k = 32$ to make $f$ cts.
+\end{enumerate}
+
+\end{document}

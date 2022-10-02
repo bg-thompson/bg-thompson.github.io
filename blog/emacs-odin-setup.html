@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>How to enable syntax highlighting for Odin in Emacs</title>
+    <link rel="stylesheet" type="text/css" href="./../style.css">
+    <link rel="icon" href="./../temp-icon.png">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../index.html">Home</a></li>
+          <li><a href="./../research/research.html">Research</a></li>
+          <li><a href="./../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>How to enable syntax highlighting for Odin in Emacs</h1>
+      <p>Date written: 2022.03.08</p>
+
+      <p>At the time of writing, <a href="https://odin-lang.org">Odin</a> is not a popular language. Most people haven't even heard of it. As such, even though a Emacs syntax highlighting file Odin has been made, it isn't part of Emacs. The steps below explain how to enable syntax highlighting in Odin with this file. The steps should be applicable to any syntax highlighting file not turned on by default in Emacs.</p>
+      <h2>Step 1: Download the syntax highlighting file</h2>
+      <ol>
+        <li>Visit the <a href="https://github.com/mattt-b/odin-mode">odin-mode repo on github</a>, hosted by mattt-b.</li>
+        <!-- archive url: http://web.archive.org/web/20220916203602/https://github.com/mattt-b/odin-mode/blob/master/odin-mode.el  -->
+        <li>Download <code>odin-mode.el</code> to somewhere on your computer.</li>
+      </ol>
+      
+      <h2>Step 2: Open your .emacs file</h2>
+      <ol>
+        <li><code>C-h v</code> then <code>user-init-file</code></li>
+        <li>The path to the Emacs file will be on the second line.</li>
+        <li><code>C-x C-f</code> then type / paste in the path.</li>
+      </ol>
+
+      <h2>Step 3: Modify your .emacs file to load the .el file</h2>
+      <ol>
+        <li>Add the line <code>(load "path-to-syntax-file")</code> to your .emacs file where <code>path-to-syntax-file</code> is the path to the <code>.el</code> file you downloaded in Step 1.</li>
+        <li>Add a comment above the line you added, telling your future self what the line does!</li>
+        <li>Test it. Open up a new instance of Emacs on a .odin file... and enjoy automatic syntax highlighting!</li>
+      </ol>
+
+      <p>I couldn't find a concise description of the steps above in once place, so hopefully whoever is reading this finds it helpful.</p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2022.</p>
+    </footer> 
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Easy bulk conversion of TikZ diagrams to .pngs</title>
+    <link rel="stylesheet" type="text/css" href="./../style.css">
+    <link rel="icon" href="./../temp-icon.png">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../index.html">Home</a></li>
+          <li><a href="./../research/research.html">Research</a></li>
+          <li><a href="./../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Easy bulk conversion of TikZ diagrams to .pngs</h1>
+      
+      <p>Date written: 2022.05.06</p>
+
+      <p>There are benefits to making diagrams in TikZ for use in technical papers. Being able to describe a diagram by a series of drawing commands means vector graphics can be created, controlled, and modified precisely. Simple diagrams can be created very quickly. Once you know the basics, the process of generating simple TiKZ diagrams in LaTeX can be smooth.</p>
+      
+      <p>For example, I created this diagram from an early paper</p>
+      
+      <div style="text-align: center;">
+        <img width="200" src="./imgs/tangle-diagram-white-background.png">
+      </div>
+      
+      <p>with the following TikZ code.</p>
+      
+<pre style="background-color:#333333;">
+\begin{tikzpicture}[very thick,scale=0.7]
+\begin{scope}[xshift=-5cm,rotate around={90:(0,0)}]
+\draw (0,1) circle (0.7cm);
+\draw (0,-1) circle (0.7cm);
+\node (T1) at (0,1) {\large $T_1$};
+\node (T2) at (0,-1) {\large $T_2$};	
+\begin{scope}[yshift=-1cm] 
+\draw (0,2) ++
+(-45:.7)  to [out=-45,in=45,looseness=1]
+(45:0.7);
+\draw (0,2) ++ (-135:0.7) to [out=-135,in=135,
+looseness=1] (135:0.7);
+\end{scope}
+\draw (0,1) ++ (135:0.7) -- ++ (135:1);
+\draw (0,1) ++ (45:0.7) -- ++ (45:1);
+\draw (0,-1) ++ (-135:0.7) -- ++ (-135:1);
+\draw (0,-1) ++ (-45:0.7) -- ++ (-45:1);
+\end{scope}
+\end{tikzpicture}
+</pre>
+
+      <p>Looking at the code now, there's a couple of things I'd modify to make both the code shorter and easier to read, however the correspondence between the lines of code and the lines which get drawn is still readily apparent.</p>
+      
+      <p>The fact that the TikZ diagrams are embedded in the final .pdfs means that turning them into other formats in bulk quickly is non-trivial though. Thankfully, there is an easy way to do this using tools which I think are relatively stable.</p>
+      
+      <h2>Step 1: Convert the diagrams into their own .pdf with the standalone class</h2>
+      
+      <p>The <em>standalone</em> class in LaTeX provides the ability to render arbitary sections into separate .pdfs. For example, the following .tex code</p>
+      
+<pre style="background-color:#333333;">
+\documentclass[multi={math-to-pdf},border=1pt]{standalone}
+\newenvironment{math-to-pdf}{$\displaystyle}{$}
+\begin{document}
+
+\begin{math-to-pdf}
+  \dim (X \oplus Y) = \dim(X) + \dim(Y)
+\end{math-to-pdf}
+
+\begin{math-to-pdf}
+  \dim (X \otimes Y) = \dim(X) \cdot \dim(Y)
+\end{math-to-pdf}
+
+\end{document}
+</pre>
+
+      <p>produces the following two-page .pdf:</p>
+
+      <div style="text-align: center;">
+        <img width="350" src="./imgs/equations-to-pdfs.png">
+      </div>
+
+      <p>By surrounding each equation with a custom environment, and telling the standalone class to use it for rendering, we produced a .pdf where each equation was rendered as its own <em>page</em>. The sizes of these pages are very different to the usual a4 page size in .pdfs, but this does not matter. By surrounding TikZ diagrams with a custom class, we can similarly produce a .pdf where each page is a separate diagram.</p>
+
+      <h2>Step 2: Convert pages in a .pdf into separate .png files with ImageMagick</h2>
+      <p>The web is completely and utterly bloated with websites which offer easy conversion of images of various formats to other formats. Some even have the gall to charge money for these services. They are all scams. There is a completely free, open-source command-line tool which can do all of this and more, and which has been around since the early 90s. This tool is <a href="https://en.wikipedia.org/wiki/ImageMagick">ImageMagick</a></p>
+      <p>Converting a .png to a .jpeg is completely and utterly trivial with ImageMagick:</p>
+
+      <div style="text-align: center;">
+        <figure>
+          <blockquote>
+            <p><code>magick diagram.png diagram.jpg</code></p>
+          </blockquote>
+        </figure>
+      </div>
+      
+<!-- magick -density 300 <pdf name> -resize 100% -colorspace RGB -channel rgb +level-colors white,black <output name>        -->
+
+          <p>The situation for the .pdf is a bit different. While ImageMagick handles conversion between formats for a variety of image types, annoyingly it doesn't actually handle .pdfs by default. Imagemagick needs access to <a href="https://en.wikipedia.org/wiki/Ghostscript">Ghostscript</a> binaries. As such, in addition to downloading and installing ImageMagick I had to download Ghostscript too.</p>
+
+          <p>Once this is done, the command</p>
+          
+      <div style="text-align: center;">
+        <figure>
+          <blockquote>
+            <p><code>magick diagram.pdf -colorspace RGB diagram.png</code></p>
+          </blockquote>
+        </figure>
+      </div>
+
+          <p>will convert the pages in the .pdf to separate images. The command</p>
+
+      <div style="text-align: center;">
+        <figure>
+          <blockquote>
+            <p><code>magick diagram.png show:</code></p>
+          </blockquote>
+        </figure>
+      </div>
+
+          <p>displays the image using Imagemagick's own image viewer, which on Windows 11 at the time of writing is IMDisplay. The command</p>
+
+      <div style="text-align: center;">
+        <figure>
+          <blockquote>
+            <p><code>magick identify -verbose diagram.png</code></p>
+          </blockquote>
+        </figure>
+      </div>
+
+          <p>prints out a large amount of metadata about the image; dropping the <code>-verbose</code> argument results in just the essential information (such as the size in pixels and filetype).</p>
+
+          <p>For most of the diagrams on my blog, I add in a few more options to the conversion command. Specifically, I increase the resolution of the rendered .pdf, and invert the colors in the diagram. The command</p>
+
+          <figure>
+            <blockquote>
+              <code>magick -density 300 diagram.pdf -resize 100% -colorspace RGB -channel rgb +level-colors white,black diagram.png</code>
+            </blockquote>
+          </figure>
+
+          <p>converted the .pdf at the top of this post into the following .png</p>
+          
+      <div style="text-align: center;">
+        <img width="200" src="./imgs/tangle-diagram-white-transparent.png">
+      </div>      
+
+          <p>Unlike the version at the top of this page whose white background is an eyesore, this diagram matches the styling of the text on this page. This command was how I made all the .pngs in my blog on <a href="concrete-torus-cohomology-ring.html">computing the cohomology of the torus</a> from a .pdf of all the diagrams. Since I only had to run the command once, the conversion took no time at all! There was certainly no need to modify the TikZ code to change the color of the rendered diagrams. Imagemagick does this with ease.</p>
+
+          <p>Additionally, it is just as easy to turn a number of images into a single pdf where each page is an image: use the corresponding command. There is at least one website which attempts to charge people to do this at scale. Imagemagick does it for free, with as many conversions as you'd like.</p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2022.</p>
+    </footer> 
+  </body>
+</html>
+
+

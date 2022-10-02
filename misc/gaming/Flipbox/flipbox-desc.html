@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Flipbox</title>
+    <link rel="stylesheet" type="text/css" href="./../../../style.css">
+    <link rel="icon" href="./../../../temp-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../../../index.html">Home</a></li>
+          <li><a href="./../../../research/research.html">Research</a></li>
+          <li><a href="./../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <hr>
+      <h1>Flipbox (2016-2018)</h1>
+      <hr>
+
+      <div style="text-align: center;">
+        <a href="./play.html" target="_blank"><img src="screenshot.jpg" width="200"></a>
+        <p><a href="./play.html" target="_blank">version 0.3.1</a> (HTML5)</p>
+      </div>
+      <hr>
+      <p>First written: 2020.04.02</p>
+
+      <p>I've always loved puzzle games, so at the end of 2016 I created my own.</p>
+
+      <p>One does not simply make a game without an idea though. Earlier in 2016 I rewatched <em><a href="https://en.wikipedia.org/wiki/Inception">Inception</a></em> (Christopher Nolan, 2010) and wondered if the <a href="https://www.youtube.com/watch?v=7yshUmxuEjE&t=2m26s">mirror scene</a> with Ariadne (Elliot Page) could be used as a mechanic for a game. At the time I <a href="mirror-idea.jpg">sketched</a> out some ideas as to how this could work, but the mechanic seemed too restrictive, at least for 3D level design. Somehow this idea then morphed into the main idea of the game involving blocks which change the environment. At the time I created <a href="mirror-room.gif">some</a> <a href="perm-room.gif">GIFs</a> to illustrate possible boxes and levels, and planned to return to the project once I was done with honours. 
+
+      <p>Picking up the project at the end of the year, I started looking around for some tools with which to create the game. Ideally I wanted a tool which wouldn't require me to first spend hundreds of hours learning it. After a day of scouring the web I realized this was an unrealistic expectation, but also that I had experience with Python, and that someone had probably made a game in Python which I could adapt.</p>
+
+      <p>Turns out there was something even better (pygame), an entire library dedicated to games in Python, and there were loads of tutorials about it! (I used <a href="http://inventwithpython.com/pygame/">this one</a>). I didn't think it would have been possible for me to create from scratch my first puzzle game within a week, but thus is the beauty of pygame (and being able to program in Python). Pygame loved pushing the CPU of my laptop a bit too much though and draining its battery (these were in the dark days before I had built my own PC), and the game was not very portable.</p>
+      <!-- archive url:  http://web.archive.org/web/20161230025834/http://inventwithpython.com/pygame/  -->
+
+      <p>A couple of months later I realized that javascript could do all of the logic and rendering I needed to run the game, but much more efficiently. Better yet, by writing the game using javascript, everyone with an internet browser would be able to play the game, instead of just people with the pygame library installed. I found an <a href="https://www.youtube.com/watch?v=8j0UDiN7my4">excellent series of tutorials</a> by a <a href="https://tisch.nyu.edu/about/directory/itp/1984778605">NYU professor</a> about the javascript library p5.js, and by following them was quickly able to rewrite the game in HTML5 using p5.js.</p>
+      <!-- archive url:  http://web.archive.org/web/20170105024403/https://tisch.nyu.edu/about/directory/itp/1984778605  -->
+
+      <p>Towards the end of 2017 I then realized the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/canvas">HTML5 Canvas element</a> and native HTML5 javascript libraries could do all the things from p5.js I used, so then I rewrote the game in pure HTML5. This time there weren't as many excellent tutorials, instead lots of documentation reading. The rewriting wasn't that bad though,... at the end of the day p5.js is still javascript!</p>
+
+      <p>In the years that followed I'd sometimes get another idea for a level and add it, but have otherwise have left the game alone. Trying to create a puzzle game where every level has a different idea was time-consuming, but I also found it rewarding. In the very least it means that when I now play outstanding puzzle games such as <a href="https://www.stephenssausageroll.com/"><em>Stephen's Sausage Roll</em></a> (Stephen Lavelle, 2016) or <a href="https://www.hempuli.com/baba/"><em>Baba Is You</em></a> (Arvi Teikari, 2019) &mdash; which are easily among the top 10 puzzle games ever created &mdash; I have a good idea of the huge amount of creativity and constant tinkering that went into their creation. As a result I probably end up enjoying them more than if I hadn't created my own puzzle game.</p>
+
+      <p>I hope you enjoy it! <s>When</s> if you get stuck, if you want to <s>spoil the solution</s> give yourself a hint, I recorded a <a href="https://www.youtube.com/watch?v=o4G0hdPbd4g">recorded a walkthrough</a> of most of the levels.</p>
+      <hr>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2017 &mdash; 2022.</p>
+    </footer> 
+  </body>
+</html>

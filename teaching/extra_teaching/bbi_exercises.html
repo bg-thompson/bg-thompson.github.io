@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Some basic yet important exercises</title>
+    <link rel="stylesheet" type="text/css" href="./../../style.css">
+    <link rel="icon" href="./../../temp-icon.png">
+    
+    <!-- The KaTeX .css and .js files linked below are available from: https://github.com/KaTeX/KaTeX/releases -->
+    <!-- KaTeX was created by Emily Eisenberg and Sophie Alpert, and is released under the MIT License. -->
+    <!-- The MIT license for KaTeX is available at: https://github.com/KaTeX/KaTeX/blob/main/LICENSE -->
+    <!-- Load KaTeX functions for math formatting, v0.16.2, released 2022-08-29. -->
+    <link rel="stylesheet" href="./../../katex/katex.min.css">
+    <script defer src="./../../katex/katex.min.js"></script>
+    <script defer src="./../../katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- End of KATEX functions for math formatting. -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../../index.html">Home</a></li>
+          <li><a href="./../../research/research.html">Research</a></li>
+          <li><a href="./../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Some basic yet important exercises</h1>
+      <p>Here is a list of basic exercises for use in introductory courses. Each is a step in a proof of an important result, as explained below. They are graded 1 to 5 stars indicating increasing difficulty.</p>
+
+      <p>The math below is rendered with KaTeX. I don't understand the widespread use of MathJax, it's unacceptably slow.</p>
+      <h2>Topology</h2>
+      <ul>
+        <li>(1 *) Let \( (X,d) \) be a metric space. Let \( c > 0 \) and define \( \rho = cd \). Show that \( (X,d) \) and \( (X,\rho) \) are identical as topological spaces. (Show they have the same open sets.)</li>
+        <li>(2 **) Let \( (X,d) \) be a metric space, and define \( \rho = d/(1 + d) \). Show that \( (X, \rho) \) is a metric space, and furthermore that \( (X,d) \) and \( (X,\rho) \) are identical as topological spaces.</li>
+        <li><em>Comment</em>: These show that scaling distances does not effect the underlying topological structure in any way, and that for every metric there exists a bounded metric which induces the same topological structure. Hence the definition of a topology is resistant to various forms of scaling.</li>
+        <li>(1 *) Let \( f : X \rightarrow R^{m \times n} \) be a function taking values in \( m \times n \) matrices. If the function \( g : X \times R^n \rightarrow R^m \) defined by \( g(x,v) = f(x)v \) is continuous, prove that the functions \( f_{ij} : X \rightarrow R \) defined by \( f_{ij}(x) = (f(x))_{ij} \) are continuous.</li>
+        <li><em>Comment</em>: Vector bundles, or more generally fibrations, are an extremely important class of topological objects. Part of their definition requires that there are homeomorphisms \( \varphi : U \times R^n \rightarrow p^{-1}(U) \) which satisfy that \( v \mapsto \varphi(x,v) \) for fixed \( x \in U \) are linear isomorphisms. (That is, the maps can be expressed as \( v \mapsto \rho(x)v \) for some \( \rho : X \rightarrow GL_n(R) \).) The previous exercise shows that \( \rho \) is in fact continuous, which is typically used throughout vector bundle theory without reference.</li> 
+        <li>(2 **) Let \( B^2 \) be the closed ball of radius 1 in the Euclidean plane. Show that if a continuous function \( f : B^2 \rightarrow B^2 \) existed for which \( f(x) \neq x \) for all \( x \in B^2 \), then the function \( g : B^2 \rightarrow S^1 \) (described next) would be continuous, and \( f \) and \( g \) agree on \( S^1 \). Define \( g(x) \) as follows. For any \( x \in B^2 \), construct a line through \( x \) and \( f(x) \). Starting at \( f(x) \), follow the line towards (and possibly through) \( x \) until the the line intersects the circle \( S^1 \). We have hence described a way of sending each point \( x \in B^2 \) to a point on \( S^1 \); this is the map \( g(x) \).</li>
+        <li><em>Comment</em>: This map can be used to prove the <a href="https://en.wikipedia.org/wiki/Brouwer_fixed_point_theorem">Brouwer fixed-point theorem</a>. If the map \( g \) above existed, then note that  \( id_{S^1} = g \circ i \) where \( i : S^1 \rightarrow B^2 \) is the inclusion function and \( id_{S^1} \) is the identity function. One could then apply the fundamental group functor from algebraic topology to obtain an injective map from the integers to the trivial group. Such a map cannot exist, giving a contradiction.</li>
+      </ul>
+      <h2>Algebra</h2>
+      <ul>
+        <li>(1 *) Let \( (A_n, \partial_n) \) be a chain complex. Show that \( (A_n, \partial_n) \cong (B_n, d_n) \), where \( (B_n, d_n ) \) is the chain complex defined by \( B_n = A_n \) and \( d_n = (-1)^n \partial_n \).</li>
+        <li><em>Comment</em>: a very important category is the category of chain complexes, which is a type of <a href="https://en.wikipedia.org/wiki/Monoidal_category">monoidal category</a>. In order to check this several axioms need to be verified, one of them simplifies to the property above.</li>
+        <li>(2 **) Let \( f(x,y) \in C[x,y] \) be a complex polynomial. If \( q \) is not a root of unity and \( f(q^m,q) = 0 \) for all \( m \), prove that \( y - q \) divides \( f \).</li>
+        <li><em>Comment</em>: This is one of the final steps in the proof of the existence of the <a href="https://en.wikipedia.org/wiki/HOMFLY_polynomial">HOMFLY polynomial</a>, a generalization of the Jones and Alexander-Conway knot polynomials.</li>
+        <li>(2 **) Show that if \( T : R^n \rightarrow R^m \) is a linear transformation, then it is (Lipschitz) continuous.</li>
+        <li><em>Comment</em>: Functions such as \( y = mx \) can easily be shown to be Lipschitz continuous using \( \epsilon-\delta \) definitions, but is the proof as easy in cases other than \( n = m = 1 \)?</li>
+
+        <li>(3*** ) Let \( A \) be a finite-dimensional real unital division algebra of dimension \( n + 1 \), and let \( TS^n \) denote the tangent space of the sphere \( S^n \). Prove that there exist \( n \) (continuous) sections \( \varphi_i : S^n \rightarrow TS^n \) which satisfy \( \varphi_i(-x) = -\varphi_i(x) \), and for which \( \{ \varphi_1(x), \ldots, \varphi_n(x) \} \) are a linearly independent set for all \( x \).</li>
+        <li>(2 **) Construct explicit sections satisfying the condition above for \( n = 3 \).</li>
+
+        <li><em>Comment</em>: Real division algebras, such as the complex numbers and quaternions, are extremely important throughout mathematics. They are purely algebraic objects, but this result relates them to topology. Specifically, the condition on the sections implies that the tangent bundle \( TRP^n \) on real projective space \( RP^n \) is trivial, which is a very strong condition. It is possible to prove using K-theory that \( TRP^n \) can be trivial only when \( n \) is of the form \( 2^k - 1 \). Thus all finite-dimensional real algebras have dimension equal to some power of 2.</li>
+
+        <li>(4 ****) Show that \( SL_2(Z) \) is generated by the matrices \( a, b \) below. Using results which give alternative pairs of matrices which generate \( SL_2(Z) \) are forbidden. The Euclidean algorithm and Benzout's identity may prove useful. If you'd rather use a different pair of matrices, go ahead. 
+          $$
+          a = \begin{bmatrix}
+          1 & 1 \\
+          0 & 1
+          \end{bmatrix},
+          b = \begin{bmatrix}
+          1 & 0 \\
+          1 & 1
+          \end{bmatrix}.
+          $$</li>
+        <li>(2 **) Show that the <a href="https://en.wikipedia.org/wiki/PSL2(Z)">modular group</a> \( PSL_2(Z) \cong Z/2 * Z/3 \). Hint: use that \( SL(Z,2) \cong \langle S, T \; | \; S^4 = 1, (ST)^3 = S^2 \rangle \), and consider \( a b^{-1} a, a^{-1} \).</li>
+        <li><em>Comment</em>: \( SL_2(Z) \) appears in loads of places across mathematics, knowing one pair of generators is useful. It also shows that what might otherwise seem like a messy algebraic proof actually isn't too bad!</li>
+      </ul>
+      <h2>Analysis</h2>
+      <ul>
+        <li>(1 *) Let \( B(a,R) \) be a closed disc in the complex plane, and \( w \) be on its boundary. Show that \( 1/(w - z) = 1/(w - a) \sum_{n = 0}^{\infty} (z - a)^n/(w - a)^n \).</li>
+        <li><em>Comment</em>: This is one of the key ingredients in the proof of <a href="https://en.wikipedia.org/wiki/Cauchy%27s_estimate">Cauchy's Estimate</a>, which easily proves <a href="https://en.wikipedia.org/wiki/Liouville%27s_theorem_(complex_analysis)">Liouville's theorem</a>, a foundational result in complex analysis. A simple corollary of Liouville's Theorem is the fundamental theorem of algebra.</li>
+        <li>(2 **) Let \( (X,d) \) be a metric space. Show that \( d: X \times X \rightarrow R \) is continuous.</li>
+        <li><em>Comment</em>: Metric spaces appear everywhere, knowing that metrics are continuous is essential knowledge and used without proof in thousands of results.</li>
+        <li>(2 **) Show that the <a href="https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality">Cauchy-Schwarz inequality</a> \( |(f,g)| \leq || f || \cdot || g || \) implies the <a href="https://en.wikipedia.org/wiki/Triangle_inequality">triangle inequality</a> \( ||f + g|| \leq ||f|| + ||g|| \). Then show that in Euclidean space \( (x,y) := \sum_{i=1}^n x_i y_i \), defines an inner product, and hence that the Euclidean metric \( d_E(x,y) := || x - y|| \) is actually a metric.</li>
+        <li><em>Comment</em>: just as every mathematician can count to 10, every mathematician knows that Euclidean space is a metric space. Actually proving that it is a metric space with algebraic manipulation from the definition of Euclidean distance is horrible, luckily Cauchy-Schwarz saves the day.</li>
+        <li>(2 **) Let \( (X,d) \) be a compact metric space, and let \( f: X \rightarrow X \) be a continuous map. Show that if \( f \) has no fixed points, then there is some \( \epsilon > 0 \) such that \( d(x, f(x)) > \epsilon \) for all \( x \).</li>
+        <li><em>Comment</em>: This can be proved in loads of ways, but (at least in the way I did it) requires intermediate machinery (e.g. extreme value theorem). It is used in the proof of the powerful <a href="https://en.wikipedia.org/wiki/Lefschetz_fixed-point_theorem">Lefschetz fixed-point theorem</a>, and probably many others.</li>
+        <li>(2 **) Use <a href="https://en.wikipedia.org/wiki/Jensen%27s_inequality">Jensen's Inequality</a> to prove the <a href="https://en.wikipedia.org/wiki/AM-GM_inequality">AM-GM</a> inequality. That is, show that any \( x_1, x_2, \ldots, x_n \geq 0\) satisfy \( (x_1 + \ldots + x_n)/n \geq \sqrt[^p]{x_1 \cdots x_n} \). Then show that any complex number \( z \) satisfies \( (1 + |z|)/(2\sqrt{|z|}) > 1 \).</li>
+        <li><em>Comment</em>: The latter inequality can be used as a step in the proof of the <a href="https://en.wikipedia.org/wiki/Riemann_mapping_theorem">Riemann mapping theorem</a>, an important and powerful result from complex analysis.</li>
+      </ul>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2020 &mdash; 2022.</p>
+    </footer> 
+  </body>
+</html>

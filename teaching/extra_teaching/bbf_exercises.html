@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Some basic but fun exercises</title>
+    <link rel="stylesheet" type="text/css" href="./../../style.css">
+    <link rel="icon" href="./../../temp-icon.png">
+
+    <!-- The KaTeX .css and .js files linked below are available from: https://github.com/KaTeX/KaTeX/releases -->
+    <!-- KaTeX was created by Emily Eisenberg and Sophie Alpert, and is released under the MIT License. -->
+    <!-- The MIT license for KaTeX is available at: https://github.com/KaTeX/KaTeX/blob/main/LICENSE -->
+    <!-- Load KaTeX functions for math formatting, v0.16.2, released 2022-08-29. -->
+    <link rel="stylesheet" href="./../../katex/katex.min.css">
+    <script defer src="./../../katex/katex.min.js"></script>
+    <script defer src="./../../katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- End of KATEX functions for math formatting. -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../../index.html">Home</a></li>
+          <li><a href="./../../research/research.html">Research</a></li>
+          <li><a href="./../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Some basic but fun exercises</h1>
+      <p>Here is a list of some fun exercises (at least for me). Many are my own creation, others are inspired from textbooks or from talks. They are graded 1 to 5 stars indicating increasing difficulty.</p>
+
+      <p>The math below is rendered with KaTeX. I don't understand why people use the slow and bulky MathJax.</p>
+      <h2>Algebra</h2>
+      <ul>
+        <li>(1* ) Show that if \( (a, b) \) is a solution to \( 2x^2 + 1 = y^2 \), then \( (2ab, 2b^2 - 1) \) is too. Hence show that \( { n \choose 2 } = m^2 \) has infinitely many solutions.</li>
+        <li>(1* ) Let \( p \) be a polynomial in a single variable. Show that \( x - a \) is a factor of \( p(x) - p(a) \). (Hint: consider \( x^n - a^n \).) Hence show that \(p \) has a root at \( a \) iff \( p \) it has \( x - a \) as a factor.</li>
+        <li>(1* ) Show that \( a^p = (a - 1)^p + 1 \) for \( a \in (Z/p)^\times \). Which theorem of Fermat does this prove? (Hint: it's a <a href="https://en.wikipedia.org/wiki/Fermat%27s_little_theorem">small one</a>.)</li>
+        <li>(2** ) Show the \( n \)-th row of Pascal's triangle consists entirely of odd numbers precisely when \( n = 2^k - 1 \) for some \( k \). (Assume the top row to be the 0-th row.)</li>
+        <li>Let \( G \) be a finite group and define \( \rho(G) = | (x,y) : xy = yx | / |G \times G| \). (This fraction can be thought of as a description of how abelian \( G \) is.)
+          <ul>
+            <li>(2** ) Show that \( \rho(G) \leq \frac{1}{2} + \frac{1}{2}|Z(G)|/|G| \) </li>
+            <li>(1* ) Show that if \( G/Z(G) \) is cyclic, then \( G \) is abelian.</li>
+            <li>(1* ) Conclude that if \( \rho(G) > 5/8, \) then \( G \) is abelian.</li>
+          </ul>
+        </li>
+        <li>(3*** ) Show using Noether's Third Isomorphism Theorem that there is a group isomorphism \( U(2)/U(1) \cong SU(2)/\{\pm I \} \). Then show via the action of \( SU(n) \) on complex space \( C^n \) that the cosets \( SU(n)/SU(n-1) \) can be identified with points in \( S^{2n - 1} \) (i.e. there is a sensible bijection between the two). Hence show there \( U(2)/U(1) \) can be identified with \( RP^3 \).</li>
+      </ul>
+      <h2>Geometry</h2>
+      <ul>
+        <li>(1*) Show that a cube contains a tetrahedron whose volume is 1/3 that of the cube. (Note: the volume of a tetrahedron with side length \( x \) is \( x^3 \sqrt{2} / 12  \) ).</li>
+      </ul>
+      <h2>Topology</h2>
+      <ul>
+        <li>(2 **) Determine all closed oriented covering spaces of the torus.</li>
+        <li>(2 **) Construct an explicit 2-sheeted covering map of the Klein bottle by the torus.</li>
+        <li>(2 **) Let \( \sim \) be the the equivalence relation on the real line \( R \) defined by \( a \sim b \) if \( a - b \in Z \). Denote the quotient space \( R / \sim \) by \( R / Z \).
+          <ul>
+            <li>Using the definition of the topology on a quotient space, show that \( R / Z \) is compact.</li>
+            <li>Show that the Euclidean plane \( R^2 \) is Hausdorff.</li>
+            <li>Show that any continuous function from a compact space to a Hausdorff space maps open sets to open sets.</li>
+            <li>Construct a continuous bijection from \( R / Z \) to \( S^1 \), and then conclude that this is a homeomorphism. (Hint: construct the bijection by defining a map from \( R \) to \( S^1 \).)</li>
+            <li>Adapt the argument above to show that \( R^2 / Z^2 \) is homeomorphic to \( S^1 \times S^1 \).</li>
+          </ul>
+        </li>
+        <li>(3 ***) Construct an explicit map which shows that \( SO(3) \) is diffeomorphic to  \( RP^3\).</li>
+      </ul>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2020 &mdash; 2022.</p>
+    </footer> 
+  </body>
+</html>

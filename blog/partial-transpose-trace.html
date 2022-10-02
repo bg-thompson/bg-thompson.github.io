@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>Super basic partial transpose and partial trace calculations</title>
+    <link rel="stylesheet" type="text/css" href="./../style.css">
+    <link rel="icon" href="./../temp-icon.png">
+
+    <!-- The KaTeX .css and .js files linked below are available from: https://github.com/KaTeX/KaTeX/releases -->
+    <!-- KaTeX was created by Emily Eisenberg and Sophie Alpert, and is released under the MIT License. -->
+    <!-- The MIT license for KaTeX is available at: https://github.com/KaTeX/KaTeX/blob/main/LICENSE -->
+    <!-- Load KaTeX functions for math formatting, v0.16.2, released 2022-08-29. -->
+    <link rel="stylesheet" href="./../katex/katex.min.css">
+    <script defer src="./../katex/katex.min.js"></script>
+    <script defer src="./../katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- End of KATEX functions for math formatting. -->    
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../index.html">Home</a></li>
+          <li><a href="./../research/research.html">Research</a></li>
+          <li><a href="./../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Super basic partial transpose and partial trace calculations</h1>
+      <p>Date written: 2022.04.27</p>
+
+      <p>As part of my research I've been reading through <em><a href="https://newcatalog.library.cornell.edu/catalog/2638602">Quantum Groups</a></em> by Kassel again. I read about half of it in undergrad, but I had forgotten much of it. Reading it a second time after almost six years has been rewarding. A couple of things which confused me the first time around I now see as being motivated by ideas in other areas of mathematics (e.g. algebraic geometry), and making these connections has been delightful.</p>
+      
+      <p>The second chapter of the book mainly consists of linear algebra, and in particular it defines partial transposes and partial traces. </p>
+      
+      <p>I did some super basic calculations with the formulas just to see what they were doing on the level of matrices. Afterwards I did some basic internet searches to see if anyone else had posted some basic examples... but I didn't find much. As such, I thought it'd be good for me to post my calculations here in case someone else wants to see some concrete examples of partial traces and partial transposes.</p>
+      
+      <h2>Partial transpose calculations</h2>
+      
+      <p>The formulas below are from Kassel, p.30. For setup, let \( V, W, X, Y \) be finite-dimensional vector spaces over a field \( k \), and \( V \otimes W, X \otimes Y \) be the standard tensor product of these. Let \( \{ v_i \} \) denote a basis for \( V \) and likewise for \( W, X ,Y \). The collection \( \{ v_i \otimes w_i \} \) forms a basis for \( V \otimes W \) and likewise for \( X \otimes Y \).  (Corollary II.1.5, p.25).</p>
+      
+      <p>If \( f : V \otimes W \rightarrow X \otimes Y \) is linear with
+        $$\begin{equation}f(v_i \otimes w_j) = \sum_{k,l} f_{ij}^{kl} x_k \otimes y_l,\end{equation}$$
+        then we can define two <em>partial transposes</em> \( f^+, f^{\times} \) in terms of the coefficients \( f_{ij}^{kl} \).</p>
+      
+      <p>Specifically, define \( f^{+} : X^* \otimes W \rightarrow V^* \otimes Y \) by
+        $$
+        \begin{equation}f^+(x^i \otimes w_j) = \sum_{k,l}f_{kj}^{il}v^k \otimes y_l,\end{equation}
+        $$
+        and define \( f^{\times} : V \otimes Y^* \rightarrow X \otimes W^*\) by 
+        $$
+        \begin{equation}f^{\times}(v_i \otimes y^j) = \sum_{k,l} f_{il}^{kj}x_k \otimes w^l.\end{equation}
+        $$
+      </p>
+      <p>Here \( X^* \) represents \( Hom(X,k) \), the vector space of linear maps from \( X \) to \( k \), and similarly for \( Y^*, V^*, W^* \).</p>
+      
+      <p>These formulas are super concrete and very easy to do calculations with, but it may not be clear exactly how the formulas work on the level of matrices. Let's figure this out for 4 x 4 matrices.</p>
+      
+      <p>Let \( V \) be a vector space over \( k \) with basis \( \{ e_1, e_2 \} \). Then \( V^* \) has a corresponding basis \( e^1, e^2 \), and \( V^* \otimes V \) has a basis \( \{ e^1_1, e^1_2, e^2_1, e^2_2 \} \), where \( e^i_j \) denotes \( e^i \otimes e_j \). Similarly denote basis elements for \( V \otimes V^* \) by \( \{ e_i^j \} \), and denote basis elements of \( V \otimes V \) by \( \{ e_{ij} \} \). Take \( W = X = Y = V \), and let \( f : V \otimes V \rightarrow V \otimes V \) be defined as in equation (1) above. Then the matrix of \( f \) is  
+        $$
+        f = \begin{bmatrix}
+        f_{11}^{11} & f_{12}^{11} & f_{21}^{11} & f_{22}^{11} \\
+        f_{11}^{12} & f_{12}^{12} & f_{21}^{12} & f_{22}^{12} \\
+        f_{11}^{21} & f_{12}^{21} & f_{21}^{21} & f_{22}^{21} \\
+        f_{11}^{22} & f_{12}^{22} & f_{21}^{22} & f_{22}^{22} \\        
+
+        \end{bmatrix} =
+        \begin{bmatrix}
+        a1 & a2 & a3 & a4 \\
+        b1 & b2 & b3 & b4 \\
+        c1 & c2 & c3 & c4 \\
+        d1 & d2 & d3 & d4
+        \end{bmatrix}   
+        $$
+        where the rows and columns are indexed by basis \( \{ e_{11}, e_{12}, e_{21}, e_{22} \} \), going left to right, and we have rewritten the symbols for clarity.
+      </p>
+      
+      <p>Computing \( f^+(e^i_j) \) for every \( i, j \) is simply a matter of applying equation (2), for example
+        $$
+        \begin{equation*}
+        \begin{split}
+        f^+(e^1_1) &= f_{11}^{11}e^1_1 + f_{11}^{12}e^1_2 + f_{21}^{11}e^2_1 + f_{21}^{12} e^2_2 \\
+        &= a1\cdot e^1_1 + b1\cdot e^1_2 + a3\cdot e^2_1 + b3\cdot e^2_2
+        \end{split}
+        \end{equation*}
+        $$
+      </p>
+      
+      <p>With these calculations, we can write \( f^+ \) in matrix form, which gives
+        $$
+        f^+ = 
+        \begin{bmatrix}
+        a1 & a2 & c1 & c2 \\
+        b1 & b2 & d1 & d2 \\
+        a3 & a4 & c3 & c4 \\
+        b3 & b4 & d3 & d4
+        \end{bmatrix}
+        $$
+        where the rows and columns are indexed by \( \{ e^1_1, e^1_2, e^2_1, e^2_2 \} \), \( \{ e_1^1, e_1^2, e_2^1, e_2^2 \} \), \( (e^i_j = e^i \otimes e_j) \) going left to right, up to down.</p>
+      
+      <p>The pattern between the matrices for \( f \) and \( f^+ \) is clear. If we write \( f \) as a block matrix with 2 x 2 blocks, we obtain
+        $$
+        f = \begin{bmatrix}
+        A & B \\
+        C & D
+        \end{bmatrix}, \quad f^+ =
+        \begin{bmatrix}
+        A & C \\
+        B & D
+        \end{bmatrix}
+        $$
+        In other words, the partial transpose \( f^+ \) transposes the locations of the blocks, but not the entries within each block.
+      </p>
+
+      <p>In a similar way we can compute \( f^{\times} \). Using equation (3) and repeating the process, we obtain
+        $$
+        f^{\times} = 
+        \begin{bmatrix}
+        a1 & b1 & a3 & b3 \\
+        a2 & b2 & a4 & b4 \\
+        c1 & d1 & c3 & d3 \\
+        c2 & d2 & c4 & d4
+        \end{bmatrix}
+        $$
+        where the rows and columns are indexed by \( \{ e_1^1, e_1^2, e_2^1, e_2^2 \} \), (\( e_i^j = e_i \otimes e^j )\) going left to right, up to down.</p>
+      
+      <p>The pattern between \( f \) and \( f^{\times} \) is clear too. Writing \( f \) as a block matrix, we have
+        $$
+        f = \begin{bmatrix}
+        A & B \\
+        C & D
+        \end{bmatrix}, \quad f^{\times} =
+        \begin{bmatrix}
+        A^T & B^T \\
+        C^T & D^T
+        \end{bmatrix}.
+        $$
+        In other words, the partial transpose \( f^{\times} \) transposes each block in the block matrix, but otherwise keeps the positions of the blocks fixed.
+      </p>
+      
+      <p>Note that in this example
+        $$
+        (f^+)^{\times} = (f^{\times})^+ = \begin{bmatrix}
+        a1 & b1 & c1 & d1 \\
+        a2 & b2 & c2 & d2 \\
+        a3 & b3 & c3 & d3 \\
+        a4 & b4 & c4 & d4
+        \end{bmatrix} = f^*,
+        $$
+        in other words, applying both of the partial transposes in either order yields the full transpose. Lemma II.3.3, p.30, states that this holds in general, and that the partial transposes are independent of the choice of basis.</p>
+
+      <h2>Partial trace calculations</h2>
+      <p>There is an obvious linear map which sends \( Hom(V,W) \otimes Hom(X,Y) \) to \( Hom(V \otimes X, W \otimes Y) \), namely
+        $$
+        \begin{equation} \lambda(f \otimes g)(v \otimes w) = f(v) \otimes g(w).
+        \end{equation}
+        $$
+        Theorem II.2.1, p.27 states that when at least one of the pairs \( (V,X), (W,Y), (V,X) \) consists of finite-dimensional vector spaces, \( \lambda \) is an isomorphism.
+      </p>
+      
+      <p>This provides the ability to express maps from tensor products as tensor products of maps. Decomposed in such a way, we could take the trace of just one of these components, and obtain a partial trace.</p>
+      
+      <p>Specifically, Kassel defines partial traces in the following way.</p>
+      
+      <p>For setup, let \( V, W \) be finite-dimensional vector spaces, and let \( \lambda : End(V) \otimes End(W) \rightarrow End(V \otimes W) \) be the isomorphism defined above in equation (4).</p>
+      
+      <p>Then define the partial trace \( tr_1 : End(V \otimes W) \rightarrow End(W) \) by
+        $$ tr_1(f) = (\phi \circ (tr \otimes id) \circ \bar \lambda)(f) $$
+        where \( \phi \) is the canonical isomorphism \( k \otimes V \cong V \), \( tr  \) is the trace map, \( id \) is the identity map, and  \( \bar \lambda \) denotes the inverse of \( \lambda \). Similarly define the partial trace \( tr_2 : End(V \otimes W) \rightarrow End(V) \) by
+        $$ tr_2(f) = (\phi \circ (id \otimes tr) \circ \bar \lambda)(f) $$
+        where the symbols are the same as above.
+      </p>
+
+      <p>Let \( f \in End(V \otimes W) \) be given by
+        $$ \begin{equation}
+        f(v_i \otimes w_j ) = \sum_{kl} f_{ij}^{kl} v_k \otimes w_l.
+        \end{equation}
+        $$
+        We will calcualte a formula for \( tr_1, tr_2 \) in terms of the coefficients \( f_{ij}^{kl} \). To do this, let \( \bar \lambda(f) = \sum_p g_p \otimes h_p \). To begin, assume that in fact \( \bar \lambda(f) = g \otimes h \), the general case will follow easily later.
+      </p>
+
+      <p>Then by definition
+        $$
+        \begin{equation}
+        \begin{split}
+        \lambda(g \otimes h)(v_i \otimes w_j) &= g(v_i) \otimes h(w_j)\\
+        &= \left( \sum_k g_i^k v_k \right) \otimes \left( \sum_l h_j^l w_l \right) \\
+        &= \sum_{kl} g_i^k h_j^l v_k \otimes w_l.
+        \end{split}
+        \end{equation}
+        $$
+        Hence comparing (5) with (6) we have
+        $$
+        \begin{equation}
+        f_{ij}^{kl} = g_i^k h_j^l.
+        \end{equation}
+        $$
+        We therefore have
+        $$
+        \begin{equation}
+        \begin{split}
+        tr_1(f)(w_j) &= \phi \circ (tr \otimes id)(g \otimes h)(w_j) \\
+        &= tr(g)h(w_j) \\
+        &= \sum_{ik}g_i^i h_j^k w_k \\
+        &= \sum_{ik} f_{ij}^{ik} w_k.
+        \end{split}
+        \end{equation}
+        $$
+      </p>
+
+      <p>We now show this formula holds in general, not just for maps \( f \) for which \( \bar \lambda f \) is a pure tensor. Let \( \bar \lambda(f) = \sum_p g_p \otimes h_p \) as before, and define \( f_p := \lambda(g_p \otimes h_p) \). By linearity of \( \lambda \) we have \( f = \sum_p f_p \). Write
+        $$
+        f_p(v_i \otimes w_j) = \sum_{kl} f_{ijp}^{kl} v_k \otimes w_l.
+        $$
+        Since each \( f_p \) is a pure tensor, the formula in (8) applies to it. Since \( tr_1 \) is linear, we can calculate
+        $$
+        \begin{equation}
+        \begin{split}
+        tr_1(f)(w_j) &= tr_1 \left( \sum_p f_p \right)(w_j) \\
+        &= \sum_p tr_1(f_p)(w_j) \\
+        &= \sum_p \sum_{ik} f_{ijp}^{ik} w_k \\
+        &= \sum_{ik} \sum_p f_{ijp}^{ik} w_k \\
+        &= \sum_{ik} f_{ij}^{ik } w_k.
+        \end{split}
+        \end{equation}
+        $$
+        So the formula holds for all \( f \in Hom(V \otimes W) \), not just maps which are pure tensors under \( \bar \lambda \).
+      </p>
+
+      <p>This formula is just as concrete and easy to do calculations with as the partial transpose calculations from earlier, but what does it look like on the level of matrices?</p>
+
+      <p>As before, let \( V \) be a vector space with basis \( \{ e_1, e_2 \} \), so that \( \{ e_{11}, e_{12}, e_{21}, e_{22} \} \) is a basis for \( V \otimes V \) where \( e_{ij} = e_i \otimes e_j \). Then as with the partial transpose calculations, we can represent a map \( f \in End(V \otimes V) \) by
+        $$
+        f = \begin{bmatrix}
+        f_{11}^{11} & f_{12}^{11} & f_{21}^{11} & f_{22}^{11} \\
+        f_{11}^{12} & f_{12}^{12} & f_{21}^{12} & f_{22}^{12} \\
+        f_{11}^{21} & f_{12}^{21} & f_{21}^{21} & f_{22}^{21} \\
+        f_{11}^{22} & f_{12}^{22} & f_{21}^{22} & f_{22}^{22} \\        
+
+        \end{bmatrix} =
+        \begin{bmatrix}
+        a1 & a2 & a3 & a4 \\
+        b1 & b2 & b3 & b4 \\
+        c1 & c2 & c3 & c4 \\
+        d1 & d2 & d3 & d4
+        \end{bmatrix}.
+        $$
+        Computing \( tr_1(f)(e_i) \) is just a matter of applying the formula (9), for example
+        $$
+        \begin{equation*}
+        \begin{split}
+        tr_1(f)(e_1) &= \sum_{ik} f_{i1}^{ik} e_k \\
+        &= f_{11}^{11} e_1 + f_{11}^{12} e_2 + f_{21}^{21} e_1 + f_{21}^{22} e_2 \\
+        &= a1 \cdot e_1 + b1 \cdot e_2 + c3 \cdot e_1 + d3 \cdot e_2 \\
+        &= (a1 + c3) \cdot e_1 + (b1 + d3) \cdot e_2.
+        \end{split}
+        \end{equation*}
+        $$
+        Doing the same calculation for \( tr_1(f)(e_2) \), and combining the results in matrix form gives
+        $$ tr_1(f) = 
+        \begin{bmatrix}
+        a1 + c3 & a2 + c4 \\
+        b1 + d3 & b2 + d4 \\
+        \end{bmatrix}
+        $$
+        Note that the entries in this are just the sum of the corresponding entries in the upper left and lower right 2 x 2 blocks in \( f \).
+      </p>
+
+      <p>We can repeat the above calculations for \( tr_2 \), obtaining
+        $$ tr_2(f)(u_i) = \sum_{jk} f_{ij}^{kj} u_k, $$
+        which when applied to the same matrix for \( f \) gives
+        $$
+        tr_2(f) =
+        \begin{bmatrix}
+        a1 + b2 & a3 + b4 \\
+        c1 + d2 & c3 + d4 \\
+        \end{bmatrix}.
+        $$
+      </p>
+
+      <p>Note that the entries in this are the traces of the corresponding 2 x 2 blocks in \( f \). Note also that in both cases
+        $$
+        tr(tr_1(f)) = tr(tr_2(f)) = a1 + b2 + c3 + d4 = tr(f).
+        $$
+        This holds in general, as described by Lemma II.3.6, p.32 in Kassel.
+      </p>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2022.</p>
+    </footer> 
+  </body>
+</html>

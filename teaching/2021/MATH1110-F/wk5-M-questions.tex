@@ -1,0 +1,102 @@
+\documentclass[12pt,a4paper]{article}
+\title{MATH1110 Lec 009 Week 5-M}
+\author{Benjamin Thompson}
+\date{September 20, 2021}
+
+\newcommand{\vspaceC}{\vspace{2cm}}
+
+\usepackage{amsmath}
+\usepackage{graphicx}
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhf{}
+\lhead{MATH1110 Sec 009}
+\chead{Week 5-M}
+\rhead{September 20, 2021}
+\cfoot{\thepage}
+
+\newtheorem{theorem}{Example}
+
+
+\begin{document}
+\subsection*{Proving functions are equal or different}
+In mathematics, two functions are considered equal if they have the same domain and take the same value at each point in the domain.
+\\
+\\
+\textbf{Example:} Show that $f(x) = 2x$ and $g(x) = 3x$ are different functions.
+\\
+\\
+\emph{Proof:} Since $f(1) = 2 \ne 3 = g(1)$, $f$ and $g$ take different values at $1$. Therefore $f \ne g$.
+\\
+\\
+Sometimes it is not as obvious when two functions are equal:
+\\
+\\
+\textbf{Example:} Let
+\[
+    f(x) = \frac{x^3 - x}{x + 1}, \qquad g(x) = x^2 - x
+\]
+have domain positive real numbers. Is $f = g$?
+\\
+\\
+\emph{Solution:} 
+Note
+\[
+    f(x) = \frac{x^3 - x}{x+1} = \frac{x(x^2 - 1)}{x+1} = \frac{x(x+1)(x-1)}{x+1} = x(x-1) = x^2 - x = g(x).
+\]
+
+\section*{Problems}
+Are the following functions equal? Justify your answers. In particular, if the functions are not equal, prove this by finding a point in the domain where the functions take different values.
+
+\begin{enumerate}
+    \item $f(x) = x^2 - 2x - 8, \qquad g(x) = (x+4)(x-2)$.
+    \vspaceC
+    \item $f(x) = x^2 - 2x - 3, \qquad g(x) =  (x+1)(x-3)$.
+    \vspaceC
+    \item $f(x) = x^2 + 1, \qquad g(x) = (x + 1)^2$.
+    \vspaceC
+    \item $f(x) = x^3 - 8, \qquad g(x) =  (x-2)^3$.
+    \vspaceC
+    \item $f(x) = \sqrt[3]{x^3 + 3x^2 + 3x + 1}, \qquad g(x) = x + 1$.
+    \vspaceC
+    \item $f(x) = \sqrt[3]{x^3 + 1}, \qquad g(x) = \sqrt[3]{x^3} + \sqrt[3]{1}$.
+    \vspaceC
+    \item $f(x) = \sin 2x, \qquad g(x) = 2\sin x$.
+    \vspaceC
+    \item
+       \[ f(x) = x^3 - x^2 - x + 1, \qquad g(x) = \begin{cases} 
+          (x^4 - 2x^2 + 1)/(x+1) & x \ne 0 \\
+          0 & x = -1.
+       \end{cases}
+    \]
+        \vspaceC
+    \item
+       \[ f(x) = x^2 + 2, \qquad g(x) = \begin{cases} 
+          (x^3 - 1)/(x-1) & x \ne 1 \\
+          3 & x = 1
+       \end{cases}.
+    \]
+\vspaceC
+       \[ f(x) = x^4 + x^3 + x^2 + x + 1, \qquad g(x) = \begin{cases} 
+          (x^5 - 1)/(x-1) & x \ne 1 \\
+          5 & x = 1
+       \end{cases}.
+    \]
+    \vspaceC
+    \item $f(x,y) = x^2 - y^2, \qquad g(x,y) = (x-y)(x+y).$
+    \vspaceC
+    \item $f(x,y) = (x-y)^2(x+y)^2, \qquad g(x,y) = x^4 - y^4.$
+            \vspaceC
+    \item $f(x,y) = 10^x + 10^y, \qquad g(x,y) = 10^{x + y}$.
+        \vspaceC
+    \item $f(x,y) = \frac{1}{x+y}, \qquad g(x,y) = \frac{1}{x} + \frac{1}{y}.$
+        \vspaceC
+    \item $f(x,y) = \cos(x+y), \qquad g(x,y) = \cos x + \cos y.$
+    \vspaceC
+    \item $f(x,y,z) = (x + y)^z, \qquad g(x,y,z) = x^z + y^z.$
+\end{enumerate}
+
+
+\end{document}

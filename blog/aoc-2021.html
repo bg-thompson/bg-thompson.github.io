@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>AoC 2021 and thoughts on Odin</title>
+    <link rel="stylesheet" type="text/css" href="./../style.css">
+    <link rel="icon" href="./../temp-icon.png">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../index.html">Home</a></li>
+          <li><a href="./../research/research.html">Research</a></li>
+          <li><a href="./../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>AoC 2021 and thoughts on Odin</h1>
+      <p>Date written: 2021.12.29</p>
+
+      <p>I first heard about <a href="https://en.wikipedia.org/wiki/Advent_of_Code">Advent of Code</a> (AoC) a couple of years ago, but this year was the first time I put serious effort into it. For those unfamiliar, AoC is a series of programming challenges which run from December 1 to December 25 each year.</p>
+
+      <p>The first couple of challenges are trivial, but by the middle of the month the problems usually reach a complexity where competent programming is required. For example, <a href="https://adventofcode.com/2021/day/1">the first AoC problem this year</a> was to calculate the number of times an integer is greater than the integer before it in a long list of integers, whereas in <a href="https://adventofcode.com/2021/day/15">the middle of the month</a> the task was to calculate the path of least-resistance through a 100x100 grid of single-digit numbers representing resistance. Loads of people start an AoC, but hardly anyone finishes. Whereas over 200,000 people solved part 1 of the first problem this year, <a href="https://adventofcode.com/2021/stats">less than 15,000 solved part 1</a> of the final problem.</p>
+      <!-- archive links: http://web.archive.org/web/20220103143907/https://adventofcode.com/2021/day/1  ;  https://web.archive.org/web/20220119030934/https://adventofcode.com/2021/day/15  ;  https://web.archive.org/web/20211226202058/https://adventofcode.com/2021/stats  -->
+
+      <p>From what I gather there tends to be three main reasons why people do AoC:</p>
+      <ul>
+        <li>The excitement of competing with other people to get solutions ASAP using python.</li>
+        <li>Using the problems as a guide to learn a new programming language.</li>
+        <li>Using the problems to practice an existing programming language.</li>
+      </ul>
+      <p>I was squarely in the dot point 3 camp the first week, practicing vanilla C. After taking the core hardware / computer architecture course at Cornell (the infamous CS 3410), for the first time in my life I actually understood how C worked, so wanted to practice C by writing code from scratch.</p>
+      <p>Writing code in C is generally very nice. For one, the translation from C into unoptimized assembly is usually simple, so you can pretty much program the way you want the instructions executed on hardware. This is the opposite of interpreted languages, and languages with <a href="https://en.wikipedia.org/wiki/Garbage_collection_(computer_science)">garbage collectors</a>, which I generally hate.</p>
+
+      <p>There are a couple of downsides of C though: simple things such as looping from 0 to 100 requires more syntax than should be needed; switches need to have constant statements; there is no easy way (to my knowledge) way to issue compile-time arguments to adjust constants.</p>
+
+      <p>Luckily, on day 8 I heard of a solution to these issues. I was listening to a podcast hosted by <a href="https://twitter.com/AbnerCoimbre">Abner Coimbre</a> about <a href="https://media.handmade-seattle.com/the-race-to-replace-c-and-cpp/">C and C++ replacements.</a> Two of the speakers had created their own programming languages, and one of them had created a language which had four principals: simplicity, high performance, joy of programming, and modern systems. The speaker was Ginger Bill, and their language was <a href="https://odin-lang.org/">Odin.</a></p>
+      <!-- archive link: http://web.archive.org/web/20210925215925/https://media.handmade-seattle.com/the-race-to-replace-c-and-cpp/  -->
+
+      <p>I begun reading through the documentation. Although there wasn't much of it, I loved what I saw. Within two days I had solved Pt 1 of the <a href="https://adventofcode.com/2021/day/8">Day 8 problem</a> in Odin, and several days later I had solved Pt 2 too. Despite not having even heard of Odin the week before, I was now able to write basic programs in it.</p>
+      <!-- archive url: http://web.archive.org/web/20211226202037/https://adventofcode.com/2021/day/8  -->
+
+      <p>The next few days consisted of reading more of Odin's open source-code library, asking questions on Odin's Discord, and experimenting with the language. Throughout this time I found the small, technical, and concrete goals of the AoC challenges great motivation to continue learning the language.</p>
+
+      <p>The AoC reddit also proved to be great motivation too: every day a couple of inside-jokes and memes regarding the latest problems would rise to the top. Seeing the jokes other people were making would only make me want to understand them more. Here are my favourite posts:
+        <div style="text-align: center;">
+          <img width="400" src="./imgs/aoc-int_to_long.jpg">
+          <p>credit: <a href="https://www.reddit.com/r/adventofcode/comments/rdatrd/2021_day_10_part_2_works_every_time_now_i_just/">ech0_matrix</a></p>
+          <img width="400" src="./imgs/aoc-clear_solution.jpg">
+          <p>credit: <a href="https://www.reddit.com/r/adventofcode/comments/rf8gr2/2021_day_13_i_cant_even_read_the_questions_most/">_AngelOnFira_ </a></p>
+          <img width="400" src="./imgs/aoc-elf_message.jpg">
+          <p>credit: <a href="https://www.reddit.com/r/adventofcode/comments/ri0uqr/2021_day_16_thanks_elves/">bungaloser</a></p>
+        </div>
+
+      <p>By Day 11 of AoC, I was sold on programming in Odin. Programming in Odin feels how programming in C <em>should</em> be. Gone is the ridiculous notion of using * for multiplication, pointer declaration and dereference. Strings are now a data type. If you have nested loops and want to break, you can control with a label exactly which loop to break out of. Functions have several return types. Variable declaration is both easier and more distinct from variable assignment. And the compiler has generally excellent error messages, saving so much debugging time. Odin is now my default programming language.</p>
+
+      <p>Overall, the AoC problems themselves were a bit hit and miss. There were some gems this year though. Day 4, Day 11, and Day 15 were particular highlights. (Namely, figuring out which of a series of bingo boards will win first and last; a basic simulation to show how animals which blink can reach equilibrium (as described in <a href="https://www.youtube.com/watch?v=t-_VPRCtiUg&t=483s">this video</a>); the least resistance problem described earlier. Note that while the least resistance problem was standard, in my case it was an excellent demonstration just how terrible <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijikstra's</a> algorithm becomes when graphs have a large number of vertices. Next time I'll be using <a href="https://en.wikipedia.org/wiki/A*_search_algorithm">A* search</a>.</p>
+
+      <p>I didn't finish all of the problems, but I finished most of them, by which I mean more than half. My solutions are available in <a href="https://github.com/bg-thompson/advent-of-code-solutions">my AoC github repo</a>. Programming solutions in any low-level language obviously takes more time than in an interpreted language, but by doing so you are actually able to take control of how data is stored and manipulated, and as such you can practice making fast programs. No fast program was ever written in python or javascript. (At least, none which were not calling C libraries under the hood!) I reckon if I didn't switch to Odin on Day 8 I would have been able to do all of the AoC problems in C, but I do not regret the choice at all.</p>
+
+      <p>I plan to do AoC again next year, hopefully by which time <a href="https://en.wikipedia.org/w/index.php?title=Jonathan_Blow&oldid=1062220677#Untitled_Programming_Language_and_Untitled_Sokoban_Game">Thekla's in-development language which inspired Odin</a> will be in open beta. I am even more excited about programming in that language than in Odin, at least for now.</p>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2021 &mdash; 2022.</p>
+    </footer> 
+  </body>
+</html>
