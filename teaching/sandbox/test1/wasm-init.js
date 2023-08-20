@@ -6,8 +6,14 @@ const canvas_ctx  = main_canvas.getContext('2d');
 
 // Text to be formatted by the .wasm
 const text_main_equation    = document.getElementById('overlay_text_main_equation');
+const text_problem_number   = document.getElementById('overlay_text_problem_number');
 const text_button_true      = document.getElementById('overlay_text_button_true');
 const text_button_false     = document.getElementById('overlay_text_button_false');
+const text_incorrect        = document.getElementById('overlay_text_incorrect');
+const text_button_try_again = document.getElementById('overlay_text_try_again');
+const text_button_menu1     = document.getElementById('overlay_text_menu1');
+const text_button_menu2     = document.getElementById('overlay_text_menu2');
+const text_button_menu3     = document.getElementById('overlay_text_menu3');
 
 var equation_number = 0;
 
@@ -39,14 +45,75 @@ async function init() {
                     canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
                     canvas_ctx.fillRect(x - 0.5 * w, y - 0.5 * h, w, h);
                 },
+                _draw_circle(cx, cy, r, red, green, blue, alpha) {
+                    canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
+                    canvas_ctx.beginPath();
+                    canvas_ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+                    canvas_ctx.fill();
+                },
+                _draw_triangle(p1x, p1y, p2x, p2y, p3x, p3y, red, green, blue, alpha) {
+                    canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
+                    canvas_ctx.beginPath();
+                    canvas_ctx.moveTo(p1x, p1y);
+		    canvas_ctx.lineTo(p2x, p2y);
+                    canvas_ctx.lineTo(p3x, p3y);
+                    canvas_ctx.fill();
+                },
+                _draw_etriangle(px, py, l, red, green, blue, alpha) {
+                    const SQRT3 = 1.73205;
+                    canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
+                    canvas_ctx.beginPath();
+                    canvas_ctx.lineTo(px - 0.5 * l, py + 0.5 / SQRT3 * l);
+                    canvas_ctx.lineTo(px + 0.5 * l, py + 0.5 / SQRT3 * l);
+                    canvas_ctx.lineTo(px,           py - 1.0 / SQRT3 * l);
+                    canvas_ctx.fill();
+                },
+                _draw_hexagon(px, py, l, red, green, blue, alpha) {
+                    const SQRT3 = 1.73205;
+                    canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
+                    canvas_ctx.beginPath();
+                    canvas_ctx.moveTo(px + l,       py);
+		    canvas_ctx.lineTo(px + 0.5 * l, py + 0.5 * SQRT3 * l);
+                    canvas_ctx.lineTo(px - 0.5 * l, py + 0.5 * SQRT3 * l);
+                    canvas_ctx.lineTo(px - l,       py);
+                    canvas_ctx.lineTo(px - 0.5 * l, py - 0.5 * SQRT3 * l);
+                    canvas_ctx.lineTo(px + 0.5 * l, py - 0.5 * SQRT3 * l);
+                    canvas_ctx.fill();
+                },
+                // TODO: Rename this to something which also indicates it updates the index.
+                _choose_math_text(index) {
+                    if (0 <= index && index < possible_equations.length) {
+                        text_main_equation.innerHTML = possible_equations[index];
+                        equation_number = index + 1;
+                    }
+                },
                 _format_overlay_text(text_type, xpos, ypos, size, color_enum, vis_enum) {
-                    // Note: for whatever crappy .js reason, switches don't seem to work.
+                    // Note: for whatever crappy .js reason, switchs don't seem to work.
                     var stext = text_main_equation; // selected text.
                     if (text_type == 1) {
-                        stext = text_button_true;
+                        stext = text_problem_number;
+                        text_problem_number.innerHTML = `Ex. ${equation_number}`
                     }
                     if (text_type == 2) {
+                        stext = text_button_true;
+                    }
+                    if (text_type == 3) {
                         stext = text_button_false;
+                    }
+                    if (text_type == 4) {
+                        stext = text_incorrect;
+                    }
+                    if (text_type == 5) {
+                        stext = text_button_try_again;
+                    }
+                    if (text_type == 6) {
+                        stext = text_button_menu1;
+                    }
+                    if (text_type == 7) {
+                        stext = text_button_menu2;
+                    }
+                    if (text_type == 8) {
+                        stext = text_button_menu3;
                     }
                     stext.style.left = `${xpos}px`;
                     stext.style.top = `${ypos}px`;
@@ -64,12 +131,20 @@ async function init() {
                         stext.style.visibility = "visible";
                     }
                 }
+                /*
+                  _render_hardcoded_text(xpos, ypos, size, red, green, blue, alpha) {
+                    canvas_ctx.font = `${size}px 'Montserrat'`
+                    canvas_ctx.fillStyle = `rgba(${255*red}, ${255*green}, ${255*blue}, ${alpha})`;
+                    canvas_ctx.fillText("Colors", xpos, ypos)
+                }
+                */
             },
         });
     } catch (e) {
 	console.error(e);
 	return;
     }
+
     // Call procs whenever the mouse moves or is down.
     main_canvas.addEventListener('mousemove', updateMouseMov);
     main_canvas.addEventListener('mousedown', notifyMouseDown);
