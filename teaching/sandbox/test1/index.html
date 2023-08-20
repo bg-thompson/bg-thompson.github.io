@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Inna-Project</title>
+    <style>
+      body {
+          margin: 0;
+          overflow: hidden;
+      }
+
+      canvas {
+          display: block;
+      }
+
+      #overlay_text_main_equation {
+          position: absolute;
+          width: 95%;
+          text-align: center;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+      }
+      #overlay_text_button_true {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: "Verdana";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_button_false {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: "Verdana";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_incorrect {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: white;
+          visibility : "hidden";
+      }
+      #overlay_text_try_again {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_problem_number {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_menu1 {
+          position: absolute;
+          width: 95%;
+          text-align: center;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_menu2 {
+          position: absolute;
+          width: 95%;
+          text-align: center;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+      #overlay_text_menu3 {
+          position: absolute;
+          width: 95%;
+          text-align: center;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+          pointer-events: none;
+      }
+    </style>
+    <script src="./equation-data.js"></script>
+    <script src="./wasm-library.js"></script>
+  </head>
+  <body>
+    <canvas id="drawing-area"></canvas>
+    <div id="overlay_text_main_equation"></div>
+    <div id="overlay_text_problem_number">Ex. X</div>
+    <div id="overlay_text_button_true">True</div>
+    <div id="overlay_text_button_false">False</div>
+    <div id="overlay_text_incorrect">Incorrect</div>
+    <div id="overlay_text_try_again">Try again</div>
+    <div id="overlay_text_menu1">Level 1: Warmup Logic Problems</div>
+    <div id="overlay_text_menu2">Level 2: Mind-Twisting Logic Problems</div>
+    <div id="overlay_text_menu3">Level 3: Vicious Logic Twisters</div>
+    <script src="./wasm-init.js"></script>
+  </body>
+  <footer>
+  </footer>
+</html>
