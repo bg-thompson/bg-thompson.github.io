@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Logic Puzzles 1</title>
+    <link rel="stylesheet" type="text/css" href="./../../style.css">
+    <link rel="icon" href="./../../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="./../../index.html">Home</a></li>
+          <li><a href="./../../research/research.html">Research</a></li>
+          <li><a href="./../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="./../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="./../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <hr>
+      <h1>Logic Puzzles 1 (with <a href="https://pi.math.cornell.edu/~zakh/">Inna Zakharevich</a>)</h1>
+      <hr>
+
+      <div style="text-align: center;">
+        <a href="logic-puzzles1.html" target="_blank"><img src="grid-screenshot1.png" width="250"></a>
+        <p><a href="logic-puzzles1.html" target="_blank">version 0.1.0 (Sep 2023)</a> (HTML5)</p>
+      </div>
+      <hr>
+      <h2>About</h2>
+      <p>The webpage linked above contains a collection of logic puzzles to help students understand mathematical statements with quantifiers.</p>
+      <h2>Instructions</h2>
+      <p>In each puzzle, evaluate whether or not the logical statement holds when applied to the grid of shapes below it. Select "True" or "False" to check your answer.</p>
+
+      <p>The logical statements include the quantifiers for all (&#8704;) and there exists (&#8707;). The functions <em>shape()</em>, <em>border()</em>, and <em>fill()</em> refer to the geometric shape, border color, and interior color of a given shape respectively.</p>
+      <h3>Example</h3>
+      <p>In the following puzzle</p>
+      <div style="text-align: center;">
+        <img src="grid-screenshot2.png" width="250">
+      </div>
+      <p>the statement</p>
+      <figure style="text-align: center;">
+        <blockquote>
+          <p>&#8704; : border(x) &#8800; fill(x)</p>
+        </blockquote>
+      </figure>
+      means in (less concise) English
+      <figure style="text-align: center;">
+        <blockquote>
+          <p>"for every shape, the border color of the shape is not equal to the interior color of the shape."</p>
+        </blockquote>
+      </figure>
+      <p>The bottom-most hexagon in the grid is comprised of only one color, so the statement is false.</p>
+      <hr>
+    </article>
+    <footer>
+      <p>Benjamin Thompson and <a href="https://pi.math.cornell.edu/~zakh/">Inna Zakharevich</a>, 2023.</p>
+    </footer> 
+  </body>
+</html>

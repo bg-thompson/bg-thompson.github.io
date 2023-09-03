@@ -14,6 +14,7 @@ const text_button_try_again = document.getElementById('overlay_text_try_again');
 const text_button_menu1     = document.getElementById('overlay_text_menu1');
 const text_button_menu2     = document.getElementById('overlay_text_menu2');
 const text_button_menu3     = document.getElementById('overlay_text_menu3');
+const text_attribution      = document.getElementById('overlay_attribution');
 
 var equation_number = 0;
 
@@ -114,6 +115,9 @@ async function init() {
                     }
                     if (text_type == 8) {
                         stext = text_button_menu3;
+                    }
+                    if (text_type == 9) {
+                        stext = text_attribution;
                     }
                     stext.style.left = `${xpos}px`;
                     stext.style.top = `${ypos}px`;

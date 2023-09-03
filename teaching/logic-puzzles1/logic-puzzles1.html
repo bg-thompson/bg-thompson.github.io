@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inna-Project</title>
+    <title>Logic Puzzles 1</title>
     <style>
       body {
           margin: 0;
@@ -24,6 +24,7 @@
           color: black;
           visibility : "hidden";
       }
+      
       #overlay_text_button_true {
           position: absolute;
           top: 50%;
@@ -35,6 +36,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_button_false {
           position: absolute;
           top: 50%;
@@ -46,6 +48,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_incorrect {
           position: absolute;
           top: 50%;
@@ -56,6 +59,7 @@
           color: white;
           visibility : "hidden";
       }
+      
       #overlay_text_try_again {
           position: absolute;
           top: 50%;
@@ -67,6 +71,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_problem_number {
           position: absolute;
           top: 50%;
@@ -78,6 +83,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_menu1 {
           position: absolute;
           width: 95%;
@@ -89,6 +95,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_menu2 {
           position: absolute;
           width: 95%;
@@ -100,6 +107,7 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
       #overlay_text_menu3 {
           position: absolute;
           width: 95%;
@@ -111,6 +119,18 @@
           visibility : "hidden";
           pointer-events: none;
       }
+      
+      #overlay_attribution {
+          position: absolute;
+          width: 95%;
+          text-align: center;
+          transform: translate(-50%, -50%);
+          font-family: "Palatino";
+          font-size: 20px;
+          color: black;
+          visibility : "hidden";
+      }
+      
     </style>
     <script src="./equation-data.js"></script>
     <script src="./wasm-library.js"></script>
@@ -126,6 +146,7 @@
     <div id="overlay_text_menu1">Level 1: Warmup Logic Problems</div>
     <div id="overlay_text_menu2">Level 2: Mind-Twisting Logic Problems</div>
     <div id="overlay_text_menu3">Level 3: Vicious Logic Twisters</div>
+    <div id="overlay_attribution">Created by <a href="https://pi.math.cornell.edu/~zakh/">Inna Zakharevich</a> &amp; <a href="https://bgthompson.com">Benjamin Thompson</a>, 2023.</div>
     <script src="./wasm-init.js"></script>
   </body>
   <footer>
