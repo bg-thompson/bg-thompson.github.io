@@ -1,0 +1,41 @@
+\documentclass[12pt, a4paper]{article}
+
+\title{MATH2210 Fall 2023 Problem Sheet Week 7}
+\author{Benjamin G. Thompson}
+\date{October 10, 2023}
+
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{fancyhdr, amsmath}
+\pagestyle{fancy}
+
+\fancyhf{}
+\lhead{MATH2210}
+\chead{Week 7-W}
+\rhead{October 10, 2023}
+\cfoot{}
+
+\begin{document}
+\subsection*{Question 1}
+Let $a,b$ be two vectors in the Euclidean plane ($R^2$) which form angle $\theta$. Prove that
+\[
+a \cdot b = ||a|| \cdot ||b|| \cos \theta.
+\]
+where $||a||$ and $||b||$ are the lengths of $a,b$ respectively.
+
+\subsection*{Question 2}
+Let $T$ be a triangle in the Euclidean plane, and $a,b,c$ be vectors going from the origin to the corners of $T$.
+\begin{enumerate}
+\item Express the centroid of $T$ in terms of $a,b,c$. (If you are unsure of the definition of the centroid of a triangle, check out the definition on Wikipedia.)
+\item Let $L$ be a line passing through a corner of $T$ and its centroid. Let $L_1$ be the length of the line segments of $L$ going from the corner to the centroid, and let $L_2$ be the length of the line segment of $L$ going from the centroid to the side opposite the corner. Calculate the ratio $L_1:L_2$.
+\end{enumerate}
+
+\subsection*{Question 3}
+Given two intesecting planes in Euclidean space ($R^3$), their smaller angle of intesection is called their \emph{dihedral angle}.
+\begin{enumerate}
+\item Calculate the dihedral axis of the $xy$-plane and the $xz$-plane.
+\item Imagine two adjacent faces of a tetrahedron as planes. Calculate their dihedral angle.
+\item Prove that the dihedral angle of the tetrahedron (calculated above) are not a rational multiple of $\pi$.
+\item Prove that a cube cannot be cut up into small pieces and reassembled to form a tetrahedron. (Check out the Wikipedia page of the Dehn invariant.)
+\end{enumerate}
+
+\end{document}
