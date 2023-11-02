@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-1 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-1</h1>
+      
+      <p>Date: 2023.10.31</p>
+
+      <ul>
+        <li><a href="introduction-slides.pdf">Course Introduction slides (.pdf)</a></li>
+      </ul> 
+      <p>Today, from scratch, we'll use a web browser to create the following picture that is a proof of Pythagoras' Theorem. (Why this is a proof is homework, hints are at the bottom of this page.) This is a very simple image compared to graphics we will program later in the course, but we need to learn how to walk before we run!</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./pythagoras-proof.png">
+      </div>
+
+      <p>Choosing a web browser as a tool to render graphics is generally a terrible decision (and we will switch to other tech in the third lesson). HOWEVER, for a simple graphic like this, making it in a browser is also simple and doesn't require much programming knowledge.</p>
+
+      <p><em>The goal of this lesson is to think about how to construct a precise but simple diagram using mathematics, and then get it on a screen.</em></p>
+      
+      <h2>Step 1: Drawing a rectangle in a web browser</h2>
+
+      <p>Let's try and draw a rectangle on the screen ASAP from scratch. We will <em>not</em> need to use any external javascript libraries, microservices, or other miscellaneous web junk. We will simply create two files. We need a place to put them though.</p>
+
+      <p><em><u>Task:</u> Create a folder on your computer to store the webpage files we will make.</em></p>
+
+      <p>The next steps require a text editor. If you already have experience with text editors, immediately skip to the task below. If not, there are a couple of things to know about text editors:</p>
+      <ol>
+        <li>They are programs which edit text files.</li>
+        <li>Anyone who does any serious programming uses a text editor.</li>
+        <li>The default text editors bundled with most operating systems typically have a limited number of features.</li>
+      </ol>
+      <p>I recommend using one of the following text editors. They are all free.</p>
+      <ul>
+        <li><a href="https://www.sublimetext.com/">Sublime Text 4</a></li>
+        <li><a href="https://www.gnu.org/software/emacs">Emacs</a></li>
+        <li><a href="https://www.vim.org/">Vi/Vim</a></li>
+      </ul>
+
+      <p>If you have never used a text editor before, I recommend Sublime Text 4. The others are very powerful, but take significant time to learn how to use. We'll be using text editors a lot in future lessons. A default editor like <em>Notepad</em> on Windows will be sufficient for this lesson, but is an unacceptable long-term choice.</p>
+
+      <p><em><u>Potential Homework:</u> If you do not have / use a text editor on your computer, choose and install a text editor before next class. Play around with it a bit before next class.</em></p>
+      
+      <p>Rendering graphics in a web browser will require a webpage, so let's make one.</p>
+      
+      <p><em><u>Task:</u> Using a text editor, create a file containing the following html code. (You are welcome to copy-paste the code below.) Save it as <code>pythagoras-theorem.html</code> inside the folder you created above.</em></p>
+        
+<pre style="background-color:#333333;">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;&lt;title&gt;Pythagoras' Theorem&lt;/title&gt;&lt;/head&gt;
+    &lt;body&gt;
+        &lt;canvas id="drawing-area"&gt;&lt;/canvas&gt;
+        &lt;script src="./draw.js"&gt;&lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;
+</pre>
+
+      <p>Now let's create the javascript code to create our graphic.</p>
+
+      <p><em><u>Task:</u> Using a text editor, create a file containing the following javascript code. (You are welcome to copy-paste it.) Save it as <code>draw.js</code> inside the folder you created above.</em></p>
+        
+<pre style="background-color:#333333;">
+"use strict";
+
+const canvas = document.getElementById('drawing-area');
+const ctx    = canvas.getContext('2d');
+
+canvas.width   = 500;
+canvas.height  = 500;
+
+ctx.fillStyle = "lightgray";
+ctx.fillRect(0,0,500,500);
+
+ctx.fillStyle = "crimson";
+ctx.fillRect(100,100,100,100);
+</pre>
+
+      <p>We should now have a webpage with graphics.</p>
+
+      <p><em><u>Task:</u> Launch your favorite web browser (recommendation: Firefox) and open the page <code>pythagoras-theorem.html</code> you just created. The shortcut <code>Ctrl-O</code> does this for Firefox on Windows. If you don't see the image below, open the browser console (<code>F12</code> on Firefox on Windows) and see what's wrong; you may have a typo in your code.</em></p>
+
+      <p>The webpage we made above is linked <a href="./pythagoras-theorem1.html">here</a> and should look like this:</p>
+
+      <div style="text-align: center;">
+        <img width="350" src="./uncorrected-zoom.png">
+      </div>
+
+      <p><em><u>Task:</u> Once working, modify the code in <code>draw.js</code> so that the web browser renders a rectangle with sides of different length. Make the rectangle larger and in the bottom-right corner. Change the color of the rectangle with <a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords">this list</a> of color keywords.</em></p>
+
+      <p>If you've finished the task above, you're ready to move on to Step 2. If you're curious about what the important lines in <code>pythagoras-theorem.html</code> are, they do the following:</p>
+      <ul>
+        <li>The 3rd line set the title of the the webpage, which the tab got its name from.</li>
+        <li>The 5th line gave the webpage a <code>canvas</code>, which we drew the rectangles on.</li>
+        <li>The 6th line told the webpage to run our rectangle-drawing code in <code>./draw.js</code>.</li>
+      </ul>
+
+      <p>The important lines in <code>draw.js</code> are as follows:</p>
+      <ul>
+        <li>The 1st line makes the browser report more errors in javascript code.</li>
+        <li>The 3nd and 4th lines give us references to the canvas so we can draw 2D shapes.</li>
+        <li>The 6th and 7th lines specify the size of the canvas.</li>
+        <li>The <code>ctx.fillStyle</code> lines set a drawing color by using a color keyword. A full list of the (current) color keywords and their colors can be found in the link above. There are other ways of setting colors, but using keywords is simple.</li>
+        <li>The <code>ctx.fillRect</code> lines draw rectangles.</li>
+      </ul>
+
+      <h2>Step 2: Dealing with ridiculous (but subtle) canvas zoom</h2>
+      
+      <p>We have a problem: on screens with a high density of pixels, (such as most 4K screens) the graphic above is not crisp but slightly blurry (such as on the screen on which I'm writing this sentence). This is one of millions of ludicrous design choices made about how web browsers should work... and another reason why we will be moving away from web browsers and javascript very soon. While we're in this swamp though, we may as well try and deal with the issue.</p>
+      
+      <p><em><u>Task:</u>Add the following block of code before the line which sets the the color to be <code>lightgray</code> in <code>draw.js</code></em></p>
+
+<pre style="background-color:#333333;">
+// Ridiculous javascript nonsense to stop canvas zoom.
+const scale   = window.devicePixelRatio;
+canvas.width  = 500 * scale;
+canvas.height = 500 * scale;
+ctx.scale(scale,scale);
+canvas.style.width  = 500 + 'px';
+canvas.style.height = 500 + 'px';
+</pre>
+      
+      <p>The result is subtle, but differences like this are extremely important in computer graphics (and, obviously, in art). The difference is clear if we zoom in and examine the pixels being drawn, as the image below illustrates.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./corrected-zoom-comparisons.png">
+      </div>
+
+      <p>Choices like this in computer graphics can make a big difference whether something is considered "good" or "bad", even though people may not be able to pinpoint why. This is something to keep in mind.</p>
+
+      <div style="text-align: center;">
+        <figure>
+          <blockquote>
+            <p><em>Even if people cannot describe what is wrong with an image, they may still sense that something is off.</em></p>
+          </blockquote>
+        </figure>
+      </div>
+
+      <h2>Step 3: Draw triangles, and hence the diagram</h2>
+
+      <p>We'll create our diagram by drawing four triangles. If we know the vertices of a triangle, drawing it on a web canvas is straightforwards, as the code below illustrates. Replacing the line of code in <code>draw.js</code> which draws a colorful rectangle with</p>
+
+<pre style="background-color:#333333;">
+ctx.beginPath();
+ctx.moveTo(0,0);
+ctx.lineTo(200,0);
+ctx.lineTo(300,100);
+ctx.closePath();
+ctx.fill();
+</pre>
+
+      <p>gives us <a href="./pythagoras-theorem3a.html">this</a> page which looks like the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./crimson-triangle.png">
+      </div>
+
+      <p>The overall code in <code>draw.js</code> so far can be found by viewing the source code of the page linked above (shortcut <code>Ctrl-U</code> on Firefox) and then clicking on the javascript file.</p>
+
+      <p><em><u>Task:</u>Replace the crimson rectangle line with the code above to your <code>draw.js</code> file, and verify the result gives you the image above. Modify the code so that the triangle takes up 25% of the background gray rectangle.</em></p>      
+      
+      <p>We can easily modify the triangle-drawing code to draw a right-angled triangle with two sides parallel to the axes.</p>
+
+      <p>We can make our diagram more customizable by using variables instead of concrete values. For example, by defining variables <code>a,b</code> and assigning them values with <code>a = 100;</code> and <code>b = 200;</code> the following code snippet produces the same image as above.</p>
+
+<pre style="background-color:#333333;">
+const a = 100;
+const b = 200;
+ctx.beginPath();
+ctx.moveTo(0,0);
+ctx.lineTo(2 * a, 0);
+ctx.lineTo(a + b, a);
+ctx.closePath();
+ctx.fill();
+</pre>
+
+      <p>Now we can vary the size of the triangle by changing the values of <code>a</code> and <code>b</code> instead of changing the parts of the code which define a path.</p>
+
+      <p><em><u>Task:</u> Modify the triangle drawing code to use variables like in the code above. Create a right-angled triangle whose two smallest sides have length that differ by 10.</em></p>
+
+      <p>We are now ready to draw the diagram illustrated at the top of this webpage! You may find it useful to work out the coordinates of the diagram on paper before coding it.</p>
+
+      <p><em><u>Final task:</u> Choose two colors, and a right-angled triangle with three different sides. Modify <code>draw.js</code> to create a version of the diagram at the top of this page with your triangle and your colors.</em></p>
+
+      <p><em><u>Homework:</u> Explain why the diagram you've created can be used to prove Pythagoras' Theorem.</em></p>
+
+      <p>Homework hints (select to unhide):</p>
+      <ol>
+        <li><span style="color:#222222">There are three different side lengths in the diagram, call them a, b, c. Calculate the areas of the overall square in terms of a, b, c in two different ways.</span></li>
+        <li><span style="color:#222222">The two different area expressions are equal to each other, so put an equality sign between the two and simplify. What do you get?</span></li>
+        </ol>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
