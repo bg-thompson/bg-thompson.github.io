@@ -1,0 +1,101 @@
+\documentclass[12pt, a4paper]{article}
+
+\title{MATH2210 Fall 2023 Problem Sheet Week 9}
+\author{Benjamin G. Thompson}
+\date{November 1, 2023}
+
+\usepackage[left=2cm, right=2cm, top=2cm, bottom=2cm]{geometry}
+\usepackage{fancyhdr, amsmath}
+\pagestyle{fancy}
+
+\fancyhf{}
+\lhead{MATH2210}
+\chead{Week 11-W}
+\rhead{November 1, 2023}
+\cfoot{}
+
+\begin{document}
+Theorem 5.6.1 in the course notes is quite confusing on a first read. Let's work through some examples to get a better understanding of it.
+\subsection*{Question 1a}
+Let $T : R^2 \rightarrow R^2$ be the linear transformation which projects points in the plane to the y-axis. Let
+\[
+b = \begin{bmatrix}
+  1 \\
+  1 \\
+  \end{bmatrix}.
+\]
+
+\begin{enumerate}
+\item What is the matrix $A$ corresponding to $T$ (using the standard basis of $R^2$)?
+\item Geometrically, describe the set of vectors $\{ b - Av : v \in R^2\}$.
+\item Geometrically, what is the smallest possible value of $||b - Av||$?
+  \item Give a geometric description of vectors $v$ which attain the minimum possible value above.
+\end{enumerate}
+
+\subsection*{Question 1b}
+Let
+\[
+A = \begin{bmatrix}
+  0 & 0 \\
+  0 & 1 \\
+  \end{bmatrix}, \quad 
+b = \begin{bmatrix}
+  1 \\
+  1 \\
+  \end{bmatrix}.
+\]
+\begin{enumerate}
+\item Is the equation Av = b consistent?
+\item What is the normal equation in $z$ corresponding to $Av = b$?
+\item Substitute $A, b$ into the normal equation in the previous step, and solve for $z$.
+  \item How do your $z$ values correspond to your geometric description in Question 1a?
+\end{enumerate}
+
+Let's now apply Theorem 5.6.1 to calculate the distance between a point and a plane.
+\subsection*{Question 2}
+  Consider the linear transformation  $T : R^2 \rightarrow R^3$ given by matrix
+\[
+A = \begin{bmatrix}
+  1  & 0 \\
+  0  & 1 \\
+  -1 & -1 \\
+\end{bmatrix},
+\]
+and let
+\[
+b = \begin{bmatrix}
+  1 \\
+  1 \\
+  1 \\
+  \end{bmatrix}.
+\]
+\begin{enumerate}
+\item What is the equation of the plane given by Im$A$?
+\item Geometrically, what is the closest point to $b$ on the plane? 
+\item Is the equation $Ax = b$ consistent?
+\item What is the normal equation in $z$ corresponding to this equation?
+\item Solve the normal equation for $z$.
+\item What is the value of $Az$? Is this value what you expected?
+\end{enumerate}
+
+\subsection*{Question 3}
+Let $(a,b), (c,d)$ be two points in $R^2$ with $a \ne c$, and let
+\[
+A = \begin{bmatrix}
+  1 & a \\
+  1 & c \\
+\end{bmatrix},
+\quad
+q = 
+\begin{bmatrix}
+  b \\
+  d \\
+\end{bmatrix}.
+\]
+\begin{enumerate}
+\item What is the normal equation corresponding to $Ax = q$?
+\item Solve the normal equation above.
+\item What is the equation of the line through $(a,b)$ and $(c,d)$?
+  \item How is the line you found above related to your solutions of the normal equation?
+  \end{enumerate}
+\end{document}
