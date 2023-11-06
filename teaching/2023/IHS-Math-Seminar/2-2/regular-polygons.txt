@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Regular Polygons</title>
+  </head>
+  <body>
+    <canvas id="drawing-area"></canvas>
+    <script src="./draw.js"></script>
+  </body>
+</html>

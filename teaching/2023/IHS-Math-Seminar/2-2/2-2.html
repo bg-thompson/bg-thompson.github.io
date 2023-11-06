@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-2 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-2</h1>
+      
+      <p>Date: 2023.11.06</p>
+
+      <p>Regular polygons are shapes where all angles have the same size and all sides have the same size. Today we'll investigate some of their basic geometry, and render the first nine regular polygons to the screen. Like last lesson, we'll make the following image using a web browser, and do so from scratch.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./regular-polygons.png">
+      </div>
+      
+      <h2>Step 1: Determine the coordinates of regular polygons</h2>
+
+      <p>Let's start by considering the coordinate geometry of the regular polygon with the smallest number of sides.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./equilateral-diagram.png">
+      </div>
+
+      <p><em><u>Task:</u> Consider the equilateral triangle in the Euclidean plane with a vertex at (0,1) and with centroid (center) at the origin (illustrated above). What are the coordinates of the other vertices P, Q?</em></p>
+
+      <p>We will soon draw equilateral triangles on the screen, but to do this we need to know the coordinates of their vertices when they are away from the origin and have arbitrary size.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./equilateral-diagram2.png">
+      </div>
+      
+      <p><em><u>Task:</u> Let a,b,r be real numbers with r > 0. Consider the equilateral triangle in the Euclidean plane with a vertex at (a,b + r) and with centroid (center) at (a,b) (illustrated above). What are the coordinates of the other vertices P', Q'?</em></p>
+
+      <p>Now let's consider a pentagon, from which we'll derive the general case.
+
+      <div style="text-align: center;">
+        <img width="300" src="./pentagon-diagram.png">
+      </div>
+
+      <p><em><u>Task:</u> For the pentagon in the Euclidean plane with a vertex at (1,0) and center located at the origin (illustrated above), what are the coordinates of the pentagon's other vertices P,Q,R,S?</em></p>
+
+      <p>Hints (select to unhide):</p>
+        <ul>
+          <li><span style="color:#222222"> Notice that the points P,Q,R,S all lie on the circle of radius 1 centered at the origin.</span></li>
+          <li><span style="color:#222222">Recall that every point on such a circle has coordinate (cos(t), sin(t)) where t is the angle traced out by the point from the positive x-axis.</span></li>
+        </ul>
+
+
+      <p>Solution (select to unhide):</p>
+      <ul>
+        <li><span style="color:#222222">P = (cos(2&pi;/5), sin(2&pi;/5))</span></li>
+        <li><span style="color:#222222">Q = (cos(4&pi;/5), sin(4&pi;/5))</span></li>
+        <li><span style="color:#222222">R = (cos(6&pi;/5), sin(6&pi;/5))</span></li>
+        <li><span style="color:#222222">S = (cos(8&pi;/5), sin(8&pi;/5))</span></li>
+      </ul>
+
+      <p><em><u>Task:</u> Consider how the pentagon example generalizes to a n-sided regular polygon (where n is some positive integer greater than 2). What are the coordinates of the vertices in the general case?</em></p>
+
+      <h2>Step 2: Getting many regular polygons on the screen</h2>
+      <p>Let's use the calculations above to get an equilateral triangle on the screen.</p>
+
+      <p><em><u>Task:</u> Copy the folder from last lesson containing the webpage files used to make a visual proof of Pythagoras' Theorem; rename the <code>.html</code> file something like <code>regular-polygons.html</code> . (Alternatively, create a new folder, save the following text files to it: <a href="./regular-polygons.txt">regular-polygons.txt</a>, <a href="./draw.txt">draw.txt</a>, and then change their file extensions from <code>.txt</code> to <code>.html</code> and <code>.js</code>. respectively.) Use your calculations in Part 1 to modify the webpage to draw an equilateral triangle to the canvas. Remember that the vertical axis on the canvas is flipped!</em></p>
+
+      <p>You should get something like the following.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./equilateral-triangle.png">
+      </div> 
+
+      <p>To efficiently draw our final image, we'll need to utilize two fundamental programming concepts: procedures and loops. We'll use procedures first.</p>
+
+      <p>Let's say we wanted to render the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./diamonds1.png">
+      </div> 
+
+      <p>We could render the right diamond by copying the drawing code of the left diamond and then changing the coordinates. For example:</p>
+
+<pre style="background-color:#333333;">
+ctx.fillStyle = "black";
+ctx.beginPath();
+ctx.moveTo(300,200);
+ctx.lineTo(200,300);
+ctx.lineTo(100,200);
+ctx.lineTo(200,100);
+ctx.closePath();
+ctx.fill();
+
+ctx.beginPath();
+ctx.moveTo(450,200);
+ctx.lineTo(400,250);
+ctx.lineTo(350,200);
+ctx.lineTo(400,150);
+ctx.closePath();
+ctx.fill();
+</pre>
+
+      <p>This is okay, but there's a more efficient and less error-prone way to render this image. (Namely, by defining and using a procedure.) A procedure can be thought of as code segment with parameters we can control. Procedures are often called functions, although they are completely different to functions in mathematics so we will avoid using such terminology.</p>
+
+      <p>The code below produces the same diamonds as above by using a procedure. First the procedure (<code>draw_diamond</code>) is defined in javascript by using the word <code>function</code> followed by the procedure name, and then a list of variables in parentheses that will be specified when the procedure is called (<code>x</code>, <code>y</code>, <code>r</code>). Once declared, we can call it to draw each diamond.</p>
+
+<pre style="background-color:#333333;">
+function draw_diamond(x,y,r) {
+    ctx.fillStyle = "black";
+    ctx.beginPath();
+    ctx.moveTo(x + r, y    );
+    ctx.lineTo(x    , y + r);
+    ctx.lineTo(x - r, y    );
+    ctx.lineTo(x    , y - r);
+    ctx.closePath();
+    ctx.fill();
+}
+
+draw_diamond(200,200,100);
+draw_diamond(400,200,50);
+</pre>
+      
+      <p>The final two lines run the lines of code within the procedure twice, first with <code>x</code>, <code>y</code>, <code>r</code> set to 200, 200, 100, and then with <code>x</code>, <code>y</code>, <code>r</code> set to 400, 200, 50.</p>
+
+      <p><em><u>Task:</u>Bundle your equilateral drawing code up into a procedure (called e.g. <code>draw_equilateral</code>), and then call the procedure to draw triangles of different sizes in different locations.</em>
+
+      <p>Procedures often reduce code size and often make code easier to read. There is another programming technique we can use to draw several shapes often achieves similar aims. Consider the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./diamonds3.png">
+      </div> 
+
+      <p>We could render this by calling <code>draw_diamond</code> six times times.</p>
+
+<pre style="background-color:#333333;">
+draw_diamond(100,100,50);
+draw_diamond(100,300,50);
+draw_diamond(300,100,50);
+draw_diamond(300,300,50);
+draw_diamond(500,100,50);
+draw_diamond(500,300,50);
+</pre>
+
+      <p>Every two lines, the x-coordinate of the diamond center increases by 200. In other words, calling the first three lines is just calling the lines <code>draw_diamond(100 + 200 * i, 100, 50)</code> and <code>draw_diamond(100 + 200 * i, 300, 50)</code> where <code>i</code> is an integer ranging from 0 to 2. This is exactly the kind of situation a for loop can help simplify. The following code produces the same result as the above 6 lines.
+
+<pre style="background-color:#333333;">
+for (var i = 0; i < 3; i += 1) {
+    draw_diamond(100 + 200 * i,100,50);
+    draw_diamond(100 + 200 * i,300,50);
+}
+</pre>
+
+      <p>The syntax basically means the following:</p>
+      <ul>
+        <li><code>var i = 0</code> declares a new variable <code>i</code> and sets it to 0.</li>
+        <li><code>i < 3</code> determines whether the code in the loop runs: if <code>i</code> is less than 3, the code in the loop runs, otherwise the loop exits.</li>
+        <li><code>i += 1</code> is what happens at the end of each loop, i.e. <code>i</code> is increased by 1 each time the code is run.</li>
+      </ul>
+      
+      <p>The net result is that the loop code is first run with <code>i</code> set to 0, which draws the diamonds in the first column. <code>i</code> increases from 0 to 1 and then the loop code runs again, drawing the diamonds in the second column. <code>i</code> is increased by 1 to 2, and the loop code runs again, drawing the diamonds in the third column. <code>i</code> is then increased to 3, but now <code>i < 3</code> is not true, so the loop ends.</p>
+ 
+<p>We can simplify the loop code. Within the for loop, the y-coordinates in the <code>draw_diamond</code> calls differ by 200, but otherwise the lines are the same. As such, we can add a for loop <em>inside</em> the for loop so that we iterate over the y-coordinates and the x-coordinates. The following code produces the same result as the previous for loop.</p>
+
+<pre style="background-color:#333333;">
+for (var i = 0; i < 3; i += 1) {
+    for (var j = 0; j < 2; j += 1) {
+        draw_diamond(100 + 200 * i, 100 + 200 * j, 50);
+    }
+}
+</pre>
+      <p>Note that we have used different variables for each loop (<code>i, j</code>); unexpected behavior would happen if we used the variable <code>i</code> for each loop.</p>
+
+      <p><em><u>Task:</u> Using for loops and your equilateral triangle procedure, create a large grid of triangles. (Feel welcome to copy the above loop code and modify it as necessary.)</em></p>
+
+      <h2>Step 3: Creating a procedure to draw general regular polygons</h2>
+
+      <p>Based on the pentagon calculations in Part 1, we can construct a procedure for drawing a pentagon:</p>
+
+<pre style="background-color:#333333;">
+function draw_pentagon(x,y,r) {
+    const pi = 3.14159
+    ctx.fillStyle = "crimson";
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + r * Math.cos(2 * pi / 5), y + r * Math.sin(2 * pi / 5));
+    ctx.lineTo(x + r * Math.cos(4 * pi / 5), y + r * Math.sin(4 * pi / 5));
+    ctx.lineTo(x + r * Math.cos(6 * pi / 5), y + r * Math.sin(6 * pi / 5));
+    ctx.lineTo(x + r * Math.cos(8 * pi / 5), y + r * Math.sin(8 * pi / 5));
+    ctx.closePath();
+    ctx.fill();
+}
+</pre>
+
+      <p>Four of the middle lines differ only in two places, and they way in which they differ form a pattern...</p>
+
+      <p><em><u>Task:</u> Copy the <code>draw_pentagon</code> procedure above into your drawing code. Use a loop to simplify the four <code>ctx.lineTo</code> lines in the procedure.</em></p>
+
+      <p>Notice that there is nothing particularly special about the number 5 in the code above too...</p>
+
+      <p><em><u>Task:</u> Rename <code>draw_pentagon</code> to <code>draw_regular_polygon</code> and give it another variable <code>n</code> representing the number of sides. Modify the code so that the procedure draws a n-sided regular polygon. Test the procedure by calling it with different values for <code>n</code>.</em></p>
+
+      <p>We are almost done! Our <code>draw_regular_polygon</code> procedure combined with loops allows us to draw different polygons in different locations. For example, the code</p>
+
+<pre style="background-color:#333333;">
+for (var i = 0; i < 3; i += 1) {
+    draw_regular_polygon(100 + 150 * i, 100, 50, i + 3);
+}
+</pre>
+
+      <p>Gives the following image</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./first-three.png">
+      </div>                          
+
+      <p><em><u>Final task:</u>Choose a border color and a fill color (e.g. using <a href="https://www.w3.org/TR/SVG11/types.html#ColorKeywords">this list</a>). Create the image at the top of this page where the shapes have your chosen border and interior colors.</em></p>
+
+      
+      <p>Hints (select to unhide):</p>
+      <ol>
+        <li><span style="color:#222222">Creating a shape with a border is just a matter of drawing two shapes on top of each other. In the loop, draw the smaller shape after the larger shape, and remember to change colors. </span></li>
+        <li><span style="color:#222222">The shapes in the image at the top have vertices pointing to the top of the page. If a polygon has a vertex pointing to the right, rotating it by &pi;/2 will point it upright.</span></li>
+      </ol>
+      <p><em><u>Homework:</u> Download KodeLife. KodeLife is available for free at <a href="https://hexler.net/kodelife">its official website</a>. Open KodeLife to test that it is working.</em></p>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>

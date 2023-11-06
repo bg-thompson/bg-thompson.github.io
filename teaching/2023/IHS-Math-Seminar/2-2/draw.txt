@@ -1,0 +1,28 @@
+"use strict";
+
+const canvas = document.getElementById('drawing-area');
+const ctx    = canvas.getContext('2d');
+
+const slength = 600;
+canvas.width  = slength;
+canvas.height = slength;
+
+// Ridiculous javascript crap to stop canvas zoom.
+const scale   = window.devicePixelRatio;
+canvas.width  = slength * scale;
+canvas.height = slength * scale;
+ctx.scale(scale,scale);
+canvas.style.width  = slength + 'px';
+canvas.style.height = slength + 'px';
+
+// Start of drawing code.
+ctx.fillStyle = "lightgray";
+ctx.fillRect(0,0,slength, slength);
+
+ctx.fillStyle = "crimson";
+ctx.beginPath();
+ctx.moveTo(300,0);
+ctx.lineTo(600,300);
+ctx.lineTo(300,300);
+ctx.closePath();
+ctx.fill();
