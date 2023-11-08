@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-3 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-3</h1>
+      
+      <p>Date: 2023.11.08</p>
+
+      <p>Because of the unexpected AMC timeslot collision today, the pace of this lesson will be different to the previous lessons. In particular, it will serve as time for people to catch-up, while also providing time for people who are ahead to play around with concepts in the next part of the course. In Step 1 we'll write a fragment shader from scratch that produces an image like the following.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./color-gradient.png">
+      </div>
+      
+      <h2>Step 1: Write a linear gradient fragment shader</h2>
+
+      <p>In the previous lesson, we used canvas commands to draw various shapes to the screen, but much of the process was abstracted. A command like <code>fillRect(0,0,100,100);</code> put colors on a screen, but the browser had to do hundreds of smaller steps behind the scenes to do this (and without reading the source code of the browser, we it's difficult to find out what these steps were). All we know is that the final product of the command <code>fillRect(0,0,100,100);</code> are pixels on a screen that collectively resemble a rectangle.</p>
+
+      <p>Today, and in the weeks ahead, we're going to do something different, and instead create graphics by specifying what the color of <em>every</em> pixel on the screen should be.</p>
+
+      <p>A fragment shader is a program which (basically) runs once for every pixel every time a screen is drawn, and its output is the final color of a given pixel.</p>
+
+      <p>Let's start by writing perhaps the simplest possible fragment shader: setting every pixel to the same color.</p>
+
+      <p>Viewing fragment shader code typically requires tedious setup, but there are some specialized programs dedicated to rendering shader code. <a href="https://hexler.net/kodelife">KodeLife</a> is one such example. Later in the course we'll make standalone programs utilizing shaders, but for now we'll use KodeLife.</p>
+
+      <p>If we open up a new file in KodeLife, delete all the default code, and instead write</p>
+
+<pre style="background-color:#333333;">
+#version 330
+void main(void)
+{
+    gl_FragColor = vec4(0.5, 0, 0.5, 1);
+}
+</pre>
+
+      <p>we get the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./purple.png">
+      </div>
+
+      <p><em><u>Task:</u> Adjust the numbers inside <code>vec4</code> and observe how the color changes. What do each of the first three arguments do?</em></p>
+
+      <p>Each pixel has inherent information, such as its screen coordinate. Screen coordinates are commonly used in fragment shaders to produce different colors for each pixel.</p>
+
+      <p>The vector containing the coordinate of a given pixel in fragment shader code is <code>gl_FragCoord</code>. By default this returns the center of the pixel for which the shader is running (e.g. <code>gl_FragCoord</code> will by default equal (0.5,0.5) for the bottom-left corner of the screen). Note that unlike the canvas in the previous two lessons, by default the coordinates axes in shaders point in the standard mathematical direction.</p>
+
+      <p>By dividing the horizontal and vertical positions of a pixel by the screen width and height, we can obtain the normalized position of the pixel. We can do this in KodeLife using the <code>resolution</code> variable.</p>
+
+      <p>For example, the following code</p>
+
+<pre style="background-color:#333333;">
+#version 330
+uniform vec2 resolution;
+void main(void) 
+{
+    float xratio = gl_FragCoord.x / resolution.x;
+    gl_FragColor = vec4(xratio, xratio, xratio, 1);
+}
+</pre>
+
+      <p>produces this image.</p>
+      
+      <div style="text-align: center;">
+        <img width="300" src="./bw-gradient.png">
+      </div>
+
+      <p>Note: the code above relies on the <code>resolution</code> uniform variable being supplied. KodeLife supplies this by default, using the values listed in the <code>Properties</code> box in KodeLife. If this code was copy-pasted into another application using fragment shaders, the image would likely not render correctly unless <code>resolution</code> was set.</p>
+
+      <p><em><u>Task:</u> Create a variable <code>yratio</code> which calculates the normalized height of a pixel. Use <code>xratio</code> and <code>yratio</code> to create some interesting color gradients (such as the image at the top of this page).</em></p>
+
+      <h2>Step 2: Explore, and adjust, the example fragment shaders in KodeLife</h2>
+
+      <p>One of the best ways to learn fragment shader programming is to read the code of some shaders you find particularly interesting, and to play about with them. In particular, to see what happens when you adjust them!</p>
+
+      <p><em><u>Final task:</u> Open up an example fragment shader in KodeLife (via <code>Help</code> &rarr; <code>Examples</code>).</em> I recommend checking out any of Keijiro Takahashi's Hex examples. Look at the code and adjust many of the constant numbers in the program. How do the visuals change?</em></p>
+      
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
