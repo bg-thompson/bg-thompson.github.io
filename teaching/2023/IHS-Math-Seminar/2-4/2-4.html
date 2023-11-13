@@ -110,7 +110,7 @@ void main(void)
         <img width="300" src="./frag1.png">
       </div>
       
-      <p><em><u>Task:</u>Open up KodeLife, and delete all the default code. Copy-paste in the above code. What you see next depends on the graphics hardware you have in your computer (e.g. your GPU). If you do not see the image above, go to the right sidebar and try adjusting the drop-down menu value in <code>Project</code> &rarr; <code>Properties</code> &rarr; <code>Renderer</code> to <code>OpenGL Core</code> or <code>OpenGL Compatibility</code>. (Upon such a change, you may need to delete the default code and replace it with the copied code above.)</em></p>
+      <p><em><u>Task:</u> Open up KodeLife, and delete all the default code. Copy-paste in the above code. What you see next depends on the graphics hardware you have in your computer (e.g. your GPU). If you do not see the image above, go to the right sidebar and try adjusting the drop-down menu value in <code>Project</code> &rarr; <code>Properties</code> &rarr; <code>Renderer</code> to <code>OpenGL Core</code> or <code>OpenGL Compatibility</code>. (Upon such a change, you may need to delete the default code and replace it with the copied code above.)</em></p>
 
       <p>The above image is a graph of the region R<sub>b</sub> (specified earlier) where the y-coordinates of the graph vary from -1 to 1, and the x coordinates vary at the same scale. (Their range will be determined by the resolution in the right sidebar in <code>Project</code> &rarr; <code>Properties</code> &rarr; <code>Resolution</code>.)</p>
 
@@ -122,7 +122,7 @@ void main(void)
 
       <p>This defines a new boolean (a variable which is either <code>true</code> or <code>false</code>) with the name <code>in_R</code>, calculates the boolean value on the right side of the <code>=</code> sign, then assigns this value to <code>in_R</code>. To calculate the expression on the right side of the <code>=</code> sign, the (scaled) product of the pixel coordinates <code>xc * yc</code> is calculated, then compared with <code>0.25</code>. If the value of the product is less than or equal to 0.25, <code>in_R</code> is set to <code>true</code>, otherwise it is set to <code>false</code>. If <code>true</code>, the color of the pixel is set to the value of <code>color1</code>, otherwise it is set to <code>color2</code>.</p>
       
-      <p><em><u>Task:</u>Modify the expression on the right of the <code>=</code> sign in the line above to produce a graph of each of the regions in Step 1. Note: the symbol <code>^</code> has a different meaning in most programming languages to exponentiation, so when creating the graph of the circle just use multiplication instead. Similarly the absolute value signs <code>|</code> mean something different too, so just use the absolute value function <code>abs()</code> instead.</em></p>
+      <p><em><u>Task:</u> Modify the expression on the right of the <code>=</code> sign in the line above to produce a graph of each of the regions in Step 1. Note: the symbol <code>^</code> has a different meaning in most programming languages to exponentiation, so when creating the graph of the circle just use multiplication instead. Similarly the absolute value signs <code>|</code> mean something different too, so just use the absolute value function <code>abs()</code> instead.</em></p>
 
       <p>The regions we have looked at so far have been given by single conditions, but we can easily define regions given by multiple conditions. For example, the region of the plane given by
         $$
@@ -146,7 +146,7 @@ void main(void)
         
       <p>Up until now the variables <code>color1</code> and <code>color2</code> have been constant, but there is no reason they need to be: we can make the colors depend on <code>xc</code> and <code>yc</code> like in the <a href="../2-3/2-3.html">previous lesson</a> to make them have gradients.</p>
 
-      <p><em><u>Final task:</u>Referring back to the lesson 2-3 (and 2-2) if necessary, create your own version of the image at the top of this page. The <code>sqrt()</code> function may be helpful.</em></p>
+      <p><em><u>Final task:</u> Referring back to the lesson 2-3 (and 2-2) if necessary, create your own version of the image at the top of this page. The <code>sqrt()</code> function may be helpful.</em></p>
 
 </article>
 <footer>
