@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-5 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-5</h1>
+      
+      <p>Date: 2023.11.15</p>
+
+      <p>The images we've made so far are static, i.e. they do not change with time. Today we'll start making dynamic animations.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./changing-disk.gif">
+      </div>
+      
+      <h2>Step 1: Parametrize the radius</h2>
+
+      <p>Let's begin by using something we basically made in the <a href="../2-4/2-4.html">previous lesson</a>.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./big-disk.png">
+      </div>
+      
+      <p>The image above is produced by the following shader code.</p>
+        
+<pre style="background-color:#333333;">
+#version 330
+
+uniform vec2 resolution;
+
+void main(void) 
+{
+    float screen_ratio = resolution.y / resolution.x;
+    float xc = 2 * gl_FragCoord.x / resolution.x - 1;
+    xc /= screen_ratio;
+    float yc = 2 * gl_FragCoord.y / resolution.y - 1;
+    
+    vec4 color1  = vec4(xc,yc,1,1);
+    vec4 color2  = vec4(0.8,0.8,0.8,1);
+    
+    bool in_R = xc * xc + yc * yc <= 0.25;
+    
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * color2;
+}
+</pre>
+
+      <p>The <code>0.25</code> here controls the size of the circle. We can make this value adjustable with a slider. First, in the right sidebar, click on the <code>Project</code> tab, and scroll down until you find the <code>Parameters</code> bar. Click the <code>+</code> icon (pictured below). This will open a drop-down menu; choose <code>Constant</code> &rarr; <code>Float</code> &rarr; <code>Float</code>.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./add-parameter.png">
+      </div>
+      
+      <p>Scroll down to the bottom of the right sidebar; there should be options for a variable titled <code>value1</code> (illustrated below). Change the name of <code>value1</code> to <code>radius</code> by clicking on the text <code>value1</code>. Adjust the range of this variable by clicking on the bottom-right square with the filled-in dot (the bottom-right icon in the image below); set the range from to 0 to 1.</p>
+
+        <div style="text-align: center;">
+          <img width="300" src="./value1.png">
+        </div>
+        
+        <p>To use this variable, we should declare it as a uniform. Below or after the line <code>uniform vec2 resolution;</code> add in:
+
+<pre style="background-color:#333333;">
+uniform float radius;
+</pre>
+            
+        <p>Now replace the <code>0.25</code> in the code with <code>radius</code>, and then slide the gray / dark gray bar in the radius options. The disk should change in size!</p>
+
+        <h2>Step 2: Use the built-in uniform time</h2>
+        
+      <p>The last step was a fairly general method of defining and setting variables in fragment shaders we want to manually adjust. Kodelife comes with some built-in uniforms, one of which is time.</p>
+
+      <p>To use it, we only need change the line that we added from</p>
+
+<pre style="background-color:#333333;">
+uniform float radius;
+</pre>
+
+to
+<pre style="background-color:#333333;">
+uniform float time;
+</pre>
+
+      <p>We can now use this variable to create a radius which varies. For example, taking sin(time) would return a value between -1 and 1. Before the line in the fragment shader code where the bool <code>in_R</code> is declared and set, then, we could add in the line</p>
+
+<pre style="background-color:#333333;">
+float radius = 1 + sin(time);
+</pre>
+
+      <p>which would have the affect of periodically varying the radius from 0 to 2.</p>
+        
+      <p><em><u>Task:</u> Modify the code so that the radius of the disk varies over time.</em></p>
+
+      <p>A creative and often satisfying experience is making up your own animations.</p>
+        
+      <p><em><u>Final Task:</u> On your own or in a group, make a short and simple animation. (E.g. A disk which moves in a circle; a triangle which rotates over time.)</em></p>
+
+</article>
+<footer>
+  <p>Benjamin Thompson, 2023.</p>
+</footer> 
+</body>
+</html>
