@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-6 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-6</h1>
+      
+      <p>Date: 2023.11.17</p>
+
+      <p>We've already covered a lot in the last five lessons, so today serves two purposes: catch-up for people who'd like to revisit / tinker / finish content from the previous lessons, otherwise exploring (and adapting) shaders other people have made.</p>
+
+      <p>We'll make an animation which looks like the following image by adapting <a href="https://www.shadertoy.com/view/DtXfDr">a fragment shader made by supah</a> on Shadertoy.
+        
+      <div style="text-align: center;">
+        <img width="300" src="./pretty-sinx.png">
+      </div>
+      
+      <h2>Step 1: Copy in the code, renaming variables if necessary.</h2>
+
+      <p>Shadertoy has an incredible collection of fragment shaders, and reading / tinkering with the code of these is a great way to learn tricks and principals for writing fragment shaders. (And sometimes, the only way to learn!)</p>
+
+      <p>Let's say we click on the link to the fragment shader illustrated above ("Discotech 2"), open up a blank Kodelife window, and then cut and paste the code from Shadertoy into Kodelife. Does everything compile? No, we instead get the following error messages.</p>
+
+      <div style="text-align: center;">
+        <img width="600" src="./errors1.png">
+      </div>
+
+      <p>Let's deal with the time issue first. In the <a href="..\2-5\2-5.html">previous lesson</a> we used a built-in uniform <code>time</code> to create a basic animation. We can make a similar setup here.</p>
+
+      <p>Specifically, adding in the line</a>
+
+<pre style="background-color:#333333;">
+uniform float time;
+</pre>
+
+      <p>before the <code>Line</code> procedure, and replacing <code>iTime</code> words with <code>time</code> eliminates the error.</p>
+
+      <p><em><u>Task:</u> Similar to the <code>iTime</code> &rarr; <code>time</code> replacement, modify the code to use the <code>resolution</code> uniform we used in the recent lessons, thereby removing the iResolution compile error.</em></p>
+
+      <p>We're not done yet. The main procedures in Shadertoy take in the position of a pixel and return its color. If we replace the first main procedure line with
+
+<pre style="background-color:#333333;">
+void main(void) {
+    vec2 I = gl_FragCoord.xy;
+    vec4 O;
+</pre>
+
+      <p>and before the final bracket include</p>
+        
+<pre style="background-color:#333333;">
+gl_FragColor = O;
+</pre>
+
+<p>then we have basically adapted the fragment shader code to use the uniforms that KodeLife sends to shader programs, so the shader should compile.</p>
+
+<p>Even though the code we copied just illustrates simple geometry and is therefore likely to be ineligible for copywrite, supah (presumably) invested time into the shader to make the geometry very pretty! in the shader code we should at least acknowledge who first made the shader, and where we copied it from. Doing this in general is important; not doing this is in general plagiarism.</p>
+
+<p>In total, we end up with the following shader:</p>
+
+<pre style="background-color:#333333;">
+#define S smoothstep
+
+//
+// "Discotecq 2" by supah, available at: https://www.shadertoy.com/view/DtXfDr
+//
+
+uniform float time;
+uniform vec2  resolution;
+
+vec4 Line(vec2 uv, float speed, float height, vec3 col) {
+    uv.y += S(1., 0., abs(uv.x)) * sin(time * speed + uv.x * height) * .2;
+    return vec4(S(.06 * S(.2, .9, abs(uv.x)), 0., abs(uv.y) - .004) * col, 1.0)
+    * S(1., .3, abs(uv.x));
+}
+
+void main(void) {
+    vec2 I = gl_FragCoord.xy;
+    vec4 O;
+    vec2 uv = (I - .5 * resolution.xy) / resolution.y;
+    O = vec4 (0.);
+    for (float i = 0.; i <= 5.; i += 1.) {
+        float t = i / 5.;
+        O += Line(uv, 1. + t, 4. + t, vec3(.2 + t * .7, .2 + t * .4, 0.3));
+    }
+    gl_FragColor = O;
+}
+</pre>
+
+<p><em><u>Task:</u> Copy the code above into a blank KodeLife session, and tinker with the numbers. How can you get three sine waves on the screen? How can you make the waves slower? Can you make the waves have a higher amplitude?</em></p>
+
+<h2>Step 2: Browse Shadertoy!</h2>
+        
+<p><em><u>Final Task:</u> Find at least three interesting (and small in terms of number of lines of code) examples on <a href="https://www.shadertoy.com/">shadertoy.com</a>, and try to get them running within KodeLife. Make some small changes to their code, and observe how such changes affect the pattern.</em></p>
+
+</article>
+<footer>
+  <p>Benjamin Thompson, 2023.</p>
+</footer> 
+</body>
+</html>
