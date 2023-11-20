@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-4 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- The KaTeX .css and .js files linked below are available from: https://github.com/KaTeX/KaTeX/releases -->
+    <!-- KaTeX was created by Emily Eisenberg and Sophie Alpert, and is released under the MIT License. -->
+    <!-- The MIT license for KaTeX is available at: https://github.com/KaTeX/KaTeX/blob/main/LICENSE -->
+    <!-- Load KaTeX functions for math formatting, v0.16.2, released 2022-08-29. -->
+    <link rel="stylesheet" href="../../../../katex/katex.min.css">
+    <script defer src="../../../../katex/katex.min.js"></script>
+    <script defer src="../../../../katex/auto-render.min.js" onload="renderMathInElement(document.body);"></script>
+    <!-- End of KATEX functions for math formatting. -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-4</h1>
+      
+      <p>Date: 2023.11.13</p>
+
+      <p>Today we will examine examples of how to specify regions in the Euclidean plane using conditions on points, and then adapt them in fragement shaders to create an image like the following.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./gradient-region.png">
+      </div>
+      
+      <h2>Step 1: Graphing regions in the Euclidean plane by hand</h2>
+
+      <p>Let's first get some practice graphing regions in the plane.</p>
+
+      <p>We can think of regions in the plane as sets of points, for example
+        $$
+        R_a = \{ (x,y) : x \leq 0.5 \}.
+        $$
+        If you haven't seen this type of notation before, it's not nearly as bad as you may think. It can be translated into English as "R<sub>a</sub> is equal to the set of points (x,y) for which x is less than or equal to 0.5".</p>
+
+      <p>Graphing this by hand is straightforwards, and it should be easy to visualize the region in any decent graphing tool. Using <a href="https://www.desmos.com/calculator">Desmos</a> and entering the equation x &leq; 0.5 into the sidebar gives a plot like the following.</p>
+
+      <div style="text-align: center;">
+        <img width="600" src="./desmos-screenshot-1.png">
+      </div>
+
+      <p>Similarly the region
+        $$
+        R_b = \{ (x,y) : xy \leq 0.25 \}
+        $$
+        can be visualized in Desmos.</p>
+
+        <div style="text-align: center;">
+          <img width="600" src="./desmos-screenshot-2.png">
+        </div>
+
+        <p>Note that we disabled the first region we specified; there was no need to replace it.</p>
+
+      <p><em><u>Task:</u> Try sketching the regions below by hand on paper (or using a digital equivalent), without using a graphing tool. Compare your sketches with your neighbors. Then check your plots by drawing the regions in your favorite graphing tool.</em></p>
+
+      <p>$$
+        \begin{equation*}
+        \begin{split}
+        R_1 &= \{ (x,y) : x \leq y \}, \\
+        R_2 &= \{ (x,y) : x + y \leq 1 \}, \\
+        R_3 &= \{ (x,y) : x^2 + y^2 \leq 0.25 \}, \\
+        R_4 &= \{ (x,y) : \arctan(y/x) \leq \pi/4 \}, \\
+        R_5 &= \{ (x,y) : |y| \leq |x| \}, \\
+        R_6 &= \{ (x,y) : \max(|x|,|y|) \leq 0.5 \}. \\
+        \end{split}
+        \end{equation*}
+        $$</p>
+
+      <h2>Step 2: Define regions in a fragment shader</h2>
+
+      <p>The following fragment shader code</p>
+
+<pre style="background-color:#333333;">
+#version 330
+uniform vec2 resolution;
+void main(void) 
+{
+    float screen_ratio = resolution.y / resolution.x;
+    float xc = 2 * gl_FragCoord.x / resolution.x - 1;
+    xc /= screen_ratio;
+    float yc = 2 * gl_FragCoord.y / resolution.y - 1;
+        
+    vec4 color1  = vec4(0,0,1,1);
+    vec4 color2  = vec4(0.8,0.8,0.8,1);
+        
+    bool in_R = xc * yc <= 0.25;
+                               
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * color2;
+}
+</pre>
+
+      <p>produces the following image.</p>
+      
+      <div style="text-align: center;">
+        <img width="300" src="./frag1.png">
+      </div>
+      
+      <p><em><u>Task:</u> Open up KodeLife, and delete all the default code. Copy-paste in the above code. What you see next depends on the graphics hardware you have in your computer (e.g. your GPU). If you do not see the image above, go to the right sidebar and try adjusting the drop-down menu value in <code>Project</code> &rarr; <code>Properties</code> &rarr; <code>Renderer</code> to <code>OpenGL Core</code> or <code>OpenGL Compatibility</code>. (Upon such a change, you may need to delete the default code and replace it with the copied code above.)</em></p>
+
+      <p>The above image is a graph of the region R<sub>b</sub> (specified earlier) where the y-coordinates of the graph vary from -1 to 1, and the x coordinates vary at the same scale. (Their range will be determined by the resolution in the right sidebar in <code>Project</code> &rarr; <code>Properties</code> &rarr; <code>Resolution</code>.)</p>
+
+      <p>The line of code in the above fragment shader that actually determines the shape of the hyperbola is</p>
+
+<pre style="background-color:#333333;">
+    bool in_R = xc * yc <= 0.25;
+</pre>      
+
+      <p>This defines a new boolean (a variable which is either <code>true</code> or <code>false</code>) with the name <code>in_R</code>, calculates the boolean value on the right side of the <code>=</code> sign, then assigns this value to <code>in_R</code>. To calculate the expression on the right side of the <code>=</code> sign, the (scaled) product of the pixel coordinates <code>xc * yc</code> is calculated, then compared with <code>0.25</code>. If the value of the product is less than or equal to 0.25, <code>in_R</code> is set to <code>true</code>, otherwise it is set to <code>false</code>. If <code>true</code>, the color of the pixel is set to the value of <code>color1</code>, otherwise it is set to <code>color2</code>.</p>
+      
+      <p><em><u>Task:</u> Modify the expression on the right of the <code>=</code> sign in the line above to produce a graph of each of the regions in Step 1. Note: the symbol <code>^</code> has a different meaning in most programming languages to exponentiation, so when creating the graph of the circle just use multiplication instead. Similarly the absolute value signs <code>|</code> mean something different too, so just use the absolute value function <code>abs()</code> instead.</em></p>
+
+      <p>The regions we have looked at so far have been given by single conditions, but we can easily define regions given by multiple conditions. For example, the region of the plane given by
+        $$
+        R_c = \{ (x,y) : y \leq 0.5, \; y \geq 0.5 - x, \; y \geq x - 0.5 \}
+        $$
+        are all the points (x,y) which simultaneously satisfy all of the conditions.</p>
+
+      <p>We can use the and operator (<code>&&</code>) to specify such a region in a fragment shader.</p>
+
+      <p>By changing the same line as in the previous task to instead be</p>
+
+<pre style="background-color:#333333;">
+    bool in_R = yc <= 0.5 && yc >= 0.5 - xc && yc >= xc - 0.5;
+</pre>
+
+      <p>we get the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./frag2.png">
+      </div>                                      
+        
+      <p>Up until now the variables <code>color1</code> and <code>color2</code> have been constant, but there is no reason they need to be: we can make the colors depend on <code>xc</code> and <code>yc</code> like in the <a href="../2-3/2-3.html">previous lesson</a> to make them have gradients.</p>
+
+      <p><em><u>Final task:</u> Referring back to the lesson 2-3 (and 2-2) if necessary, create your own version of the image at the top of this page. The <code>sqrt()</code> function may be helpful.</em></p>
+
+</article>
+<footer>
+  <p>Benjamin Thompson, 2023.</p>
+</footer> 
+</body>
+</html>
