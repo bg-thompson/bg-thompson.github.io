@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-7 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-7</h1>
+      
+      <p>Date: 2023.11.21</p>
+
+      <p>This morning we'll look at the floor function, which can be used to create a variety of grid-based patterns. In particular, we'll create the checkerboard pattern below.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./checkerboard.png">
+      </div>
+      
+      <h2>Step 1: Create by hand some graphs of variations of floor(x)</h2>
+
+      <p>Define a function <em>floor(x)</em> that takes as input a real number and outputs a real number by the following rule: given a real number <em>a</em>, <em>floor(a)</em> is the smallest integer that is less than or equal to <em>a</em>.</p>
+
+      <p><em><u>Task:</u> Create a plot of floor(x) by on paper (or the digital equivalent) on the interval [-2,2]. Now do the same for floor(2x) and floor(x/2). Repeat for 2 &times; floor(x) and 0.5 &times; floor(x). Finally, graph 2 &times; floor(2x) + 2 on [-2,2].</em></p> 
+
+      <h2>Step 2: Create a checkerboard pattern</h2>
+
+      <p>Let's adapt the code from <a href="../2-5/2-5.html">lesson 2-5</a>: open up a new file in KodeLife, delete all the default code, and paste the code which draws a blue disk.</p>
+
+<pre style="background-color:#333333;">
+#version 330
+
+uniform vec2 resolution;
+
+void main(void) 
+{
+    float screen_ratio = resolution.y / resolution.x;
+    float xc = 2 * gl_FragCoord.x / resolution.x - 1;
+    xc /= screen_ratio;
+    float yc = 2 * gl_FragCoord.y / resolution.y - 1;
+    
+    vec4 color1  = vec4(xc,yc,1,1);
+    vec4 color2  = vec4(0.8,0.8,0.8,1);
+    
+    bool in_R = xc * xc + yc * yc <= 0.25;
+    
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * color2;
+}
+</pre>
+
+      <p>If we replace the line which sets <code>in_R</code> to the line</p>
+
+<pre style="background-color:#333333;">
+bool in_R = int(floor(xc)) % 2 == 0;
+</pre>
+        
+      <p>and adjust <code>color1</code> and <code>color2</code> to be black and white and make the aspect ratio a square, we get the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./black-white.png">
+      </div>
+
+      <p>Here wrapping <code>floor(xc)</code> in <code>int()</code> converts the data type of the result of <code>floor(x)</code> from a float to an integer, and then the <code>% 2</code> takes the remainder of this integer when divided by 2. There is another way to do this calculation using bitwise operators, but more on this in a later lesson.</p>
+
+      <p><em><u>Task:</u> Adjust the same line above so that the image below is obtained. Hint: consider the variations of floor(x) you plotted in Part 1.</em></p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./black-white-stripes.png">
+      </div>      
+
+      <p>We are now ready to make the image at the top of this page.</p>
+
+      <p><em><u>Final task:</u> Adjusting the same line or otherwise, create a checkerboard pattern.</em></p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
