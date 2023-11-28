@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-8 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-8</h1>
+      
+      <p>Date: 2023.11.28</p>
+
+      <p>In <a href="../2-5/2-5.html">lesson 2-5</a> we used a <code>time</code> uniform to make dynamic graphics. Today we'll add in a different kind of dynamism with mouse interactivity. In particular, we'll make the following graphic. (Click the video below to play.)</p>
+
+      <div style="text-align: center;">
+        <video controls width="500" src="./2-8.mp4" type="video/mp4" autoplay="true">
+        </video>
+      </div>
+      
+      <h2>Step 1: Draw the disk at the mouse position</h2>
+
+<p>Let's start with the blue disk from lesson 2-5.</p>
+
+<pre style="background-color:#333333;">
+#version 330
+
+uniform vec2 resolution;
+
+void main(void) 
+{
+    float screen_ratio = resolution.y / resolution.x;
+    float xc = 2 * gl_FragCoord.x / resolution.x - 1;
+    xc /= screen_ratio;
+    float yc = 2 * gl_FragCoord.y / resolution.y - 1;
+    
+    vec4 color1  = vec4(xc,yc,1,1);
+    vec4 color2  = vec4(0,0,0,1);
+    
+    bool in_R = xc * xc + yc * yc <= 0.25;
+    
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * color2;
+}
+</pre>
+
+<p>We want to adjust the code so that the center of the blue disk will be at our mouse position instead of at the center of the screen. This will require us to modify the line which sets <code>in_R</code>. Currently, <code>in_R</code> is set by calculating the square of the distance between the (normalized) position of a pixel and the origin. We can more easily manipulate the geometry of the disk by replacing the line with the following code.</p>
+
+<pre style="background-color:#333333;">
+    vec2 pixpos = vec2(xc,yc);
+    const float disk_radius = 0.5;
+    vec2 disk_center = vec2(0,0);
+    bool in_R = distance(disk_center, pixpos) <= disk_radius;
+</pre>
+
+      <p>This is a more code, but it is now easy to adjust the center and size of the disk.</p>
+
+      <p><em><u>Task:</u> Make the disk smaller.</em></p>
+
+      <p>Time to make <code>disk_center</code> dependent on the mouse. If we add the line</p>
+
+<pre style="background-color:#333333;">
+uniform vec2 mouse;
+</pre>
+
+      <p>below the <code>resolution</code> uniform, and replace the <code>disk_center</code> line with</p>
+
+<pre style="background-color:#333333;">
+    vec2 disk_center = mouse;
+</pre>
+              
+        <p>our graphic is now interactive.</p>
+
+      <p><em><u>Task:</u> Make these changes, then toggle the editor, (<code>View</code> &rarr; <code>Toggle Editor</code>) then click / drag with the mouse. What is wrong with the mouse movement?</em></p>
+
+      <p>Looking at the values the uniform is being set to when we drag the mouse tells us what is wrong: by going to the <code>Project</code> tab of the right sidebar, and examining the <code>Mouse</code> parameter (scrolling down if necessary), upon dragging the mouse we see that the values KodeLife sets the uniform too lie between 0 and 1 for each coordinate, and the y-coordinate seems to be inverted. At least one of these issues is trivial to fix.</p>
+
+      <p><em><u>Task:</u> Invert the y-value of the <code>mouse</code> uniform.</em></p>
+
+      <p>Currently KodeLife is normalizing the position of the mouse to be in region [0,1] &times; [0,1], while we normalized pixel positions to be in [-1,1] &times; [-1,1]. As such, we can disable the normalization KodeLife is doing (giving us the pixel coordinates of the mouse), and then in our shader cade we can repeat our normalization calculations.</p>
+
+      <p><em><u>Task:</u> Turn off normalization of the <code>mouse</code> uniform, and add the following code underneath the pixel position normalization calculations. Set <code>disk_center</code> to use our new normalized mouse position (<code>nmouse</code>) instead of the old one. Test out the new mouse dragging!</em></p>     
+
+<pre style="background-color:#333333;">
+    float mousex = 2 * mouse.x / resolution.x - 1;
+    mousex /= screen_ratio;
+    float mousey = 2 * mouse.y / resolution.y - 1;
+    vec2  nmouse = vec2(mousex, mousey); 
+</pre>
+
+      <p>If everything is working, our fragment shader should now behave like the following when we click and drag the mouse. (Click the video below to play.)</p>
+
+      <div style="text-align: center;">
+        <video controls width="500" src="./tracking-disk.mp4" type="video/mp4" autoplay="true">
+        </video>
+      </div>
+
+      <p>Now the tracking is working, we can add in some smaller disks to orbit the main disk.</p>
+
+      <h2>Step 2: Add in some animated disks</h2>
+
+      <p>If we wanted to add another disk to the graphic that also moves with the mouse, we can specify the center relative to the other disk instead of using <code>mmouse</code>. This often makes the code easier to read and adjust to get a desired visual effect. For example, adding in</p>
+
+<pre style="background-color:#333333;">
+    vec2 small_disk_center = disk_center + 0.2 * vec2(1,1);
+    bool small_disk = distance(small_disk_center, pixpos) <= 0.2 * disk_radius;
+    bool in_disks = in_R || small_disk;
+</pre>
+
+      <p>and then updating the color-setting line to use our new boolean</p>
+
+<pre style="background-color:#333333;">
+    gl_FragColor = float(in_disks) * color1 + float(! in_disks) * color2;
+</pre>
+
+      <p>results in the following image.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./small-disk.png">
+      </div>
+      
+      <p>Changing the position of the smaller disk is just a matter of changing the direction of the unit vector.</p>
+
+      <p><em><u>Task:</u> How could we make the smaller disk appear west of the larger disk instead? What about south-west? (Try it.) Position the smaller disk relative to the larger disk in terms of an angle. (Hint: How can a point be specified on the unit circle using trigonometric functions?) Add in a <code>time</code> uniform, and set the angle to be a multiple of the time.</em></p>
+    
+    <p>We should now have something like the following video. (Click to play.)</p>
+
+      <div style="text-align: center;">
+        <video controls width="500" src="./orbiting-disk.mp4" type="video/mp4" autoplay="true">
+        </video>
+      </div>
+
+<p>With a couple of additions we can now make the graphic illustrated at the top of this page.</p>
+
+      <p><em><u>Final task:</u> Add in some other smaller disks and adjust the distances to create an animation like that at the top of this page.</em></p>
+
+      <p><em><u>Bonus task:</u> Create your own graphic utilizing orbiting objects. For example, here's a <a href="https://www.shadertoy.com/view/DsGBD3">model of the Inner Solar System</a> I made and posted on ShaderToy.</em></p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
