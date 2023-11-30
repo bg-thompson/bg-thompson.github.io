@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-9 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-9</h1>
+      
+      <p>Date: 2023.11.30</p>
+
+      <p>Humanity has known about several fundamental mathematical results for hundreds of years, such as the <a href="https://en.wikipedia.org/wiki/Fundamental_theorem_of_calculus">fundamental theorem of calculus</a>. Other results are significantly older, such as a the number of <a href="https://en.wikipedia.org/wiki/Platonic_solid">Platonic solids</a>, which we've known about for thousands of years. Today we'll do something unusual in that we'll explore a topic less than 50 years old.</p>
+
+      <p>In the process we'll take advantage of the astonishing development of computer hardware over a similar timeframe to create images in microseconds that were impossible to compute 50 years ago. It's time to make some fractals, such as the image below.</p>
+
+      <div style="text-align: center;">
+        <img width="300" src="./2-9.png">
+      </div>
+      
+      <h2>Step 1: Iterate z &#x21A6; z<sup>2</sup> + c for complex z and fixed c</h2>
+
+      <p>Complex numbers can be thought of as pairs of real numbers satisfying an addition and multiplication rule. There are heaps of different ways of thinking about complex numbers (each of which provide different explanations for complex number phenomena), but thinking of them in terms of pairs will be enough for today.</p>
+
+      <p>When complex numbers are considered as pair of real numbers (a,b), they add in an intuitive way. For complex numbers (a,b) and (c,d), we define (a,b) + (c,d) = (a + c, b + d). Multiplication is more complicated. It is <em>not</em> defined as (a,b) &times (c,d) = (ac, bd). Instead, we define (a,b) &times; (c,d) = (ac - bd, ad + bc).</p>
+
+<p>From this perspective, the multiplication of complex numbers can appear weird, although it has a natural geometric interpretation in terms of lengths and angles. The length / norm / modulus |(a,b)| of a complex number is just its distance from the origin when considered as a point in the Euclidean plane. That is, |(a,b)| = &#8730;(a<sup>2</sup> + b<sup>2</sup>).</p>
+
+   <p>Since coordinates of pixels are pairs of real numbers, we can interpret them as complex numbers. Let's normalize pixel coordinates so that the vertical range of the screen is [-3,3], and plot all the complex numbers whose length is not greater than 2. </p>
+
+<pre style="background-color:#333333;">
+#version 330
+
+uniform vec2 resolution;
+
+void main(void) 
+{
+    vec2 pos = 3 * (2 * gl_FragCoord.xy - resolution) / resolution.y;
+    
+    vec4 color1  = vec4(1,1,1,1);
+    vec4 color2  = vec4(0,0,0,1);
+    
+    bool in_R = length(pos) <= 2;
+    
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * color2;
+}
+</pre>
+
+<p>The result is a disk, just as we would expect. But what happens if we multiplied a complex number with itself several times, and then took the resulting length? What kind of shape do we then get when we plot the lengths that are less than 2?</p>
+
+<p>This is easy to do in a fragment shader; we can simply replace the <code>in_R</code> line with the following code.</p>
+
+<pre style="background-color:#333333;">
+    vec2 zn = pos;
+    zn = vec2(zn.x * zn.x - zn.y * zn.y, 2 * zn.x * zn.y);
+    bool in_R = length(zn) <= 2;
+</pre>
+
+<div style="text-align: center;">
+  <img width="300" src="./z-squared.png">
+</div>
+
+<p><em><u>Task:</u> Derive the middle line in the code above from the definition of complex number multiplication.</em></p>
+
+<p>The result is a slightly smaller disk. With the geometric interpretation of complex number multiplication, this is expected too. Taking higher powers results in slightly smaller disks, as we can see if we iterate the process. In <a href="..\2-2\2-2.html">lesson 2-2</a> we made extensive use of for loops to draw different regular polygons; we can likewise use for loops here to take higher powers. Calculating z<sup>8</sup> is just ((z<sup>2</sup>)<sup>2</sup>)<sup>2</sup>, which can easily calculate compute in by replacing the middle line above with the following code.</p>
+
+<pre style="background-color:#333333;">
+    for (int i = 0; i < 3; i += 1) {
+        zn = vec2(zn.x * zn.x - zn.y * zn.y, 2 * zn.x * zn.y);
+    }
+</pre>
+
+<p>The result is indeed a smaller disk.</p>
+
+<p><em><u>Task:</u> Create an even smaller disk by calculating z<sup>64</sup> for each pixel instead and then seeing if the resulting length is smaller than or equal to 2.</em></p>
+
+<p>As is so often the case in mathematics, unexpected behavior, and sometimes beauty, can come about by slightly modifying something with regular behavior. What happens if in each iteration of the loop, we added a complex number before squaring?</p>
+
+<p><em><u>Task:</u> Modify the loop so that in each iteration <code>zn</code><sup>2</sup> - (0.5,0.5) is calculated instead of <code>zn</code><sup>2</sup>.</em></p>
+
+<p>The result is weird, but symmetrical, blob. What happens if we increase the number of loop iterations? We could do this by manually changing the iteration limit, but there is a more fun way of doing this.</p>
+
+<p>Let us add in a uniform which will control the number of loop iterations. In the right-side bar in KodeLife, if we create a new constant <code>Integer</code> parameter called <code>ilimit</code> (revisit <a href="..\2-5\2-5.html">lesson 2-5</a> if you would like a reminder of how to do this), set its range to be 0 and 100, we can then use this value in the code.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./ilimit-slider.png">
+</div>
+
+<p>Underneath the <code>resolution</code> uniform we add the line</p>
+
+<pre style="background-color:#333333;">
+  uniform int ilimit;
+</pre>
+
+<p>and then adjust the limit in the for loop to be <code>ilimit</code>. For example, when <code>ilimit</code> is set to 10, the region looks like the following.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./ilimit-10.png">
+</div>
+
+<p><em><u>Task:</u> Add in a slider, increase <code>ilimit</code> past 10, and observe how the resulting fractal grows! You may want to adjust the vertical screen range from [-3,3] to [-1,1] to get better images.</em></p>
+
+<h2>Step 2: Add in mouse interactivity</h2>
+
+<p>We chose the constant c in the z &#x21A6; z<sup>2</sup> loop body to be (-0.5,-0.5)... but what happens with other values? In the same way that in the <a href="..\2-8\2-8.html">previous lesson</a> we set the center of a disk to be determined by mouse clicking / dragging, we can just set the value of c in each loop iteration by using the mouse too.</p>
+
+<p><em><u>Task:</u> Add in a mouse uniform, and normalize it in the same way the pixel position is normalized (i.e. repeat the calculation but using <code>mouse</code> instead of <code>gl_FragCoord</code>). Remember to uncheck the normalization KodeLife attempts and to invert the y-coordinate! Set c to the mouse position, toggle the code editor, and drag the mouse around. Take screenshots!</em></p>
+
+<h2>Step 3: Add in color</h2>
+<p>We have now uncovered astonishing complexity and beauty behind the simple dynamical rule z &#x21A6; z<sup>2</sup> + c, but we can make even more beautiful graphics by adding in color.</p>
+
+<p>To do this, we'll keep track of how many iterations a complex number undertakes before its length grows beyond 2. If we create a new variable representing this growth "escape" index</p>
+
+<pre style="background-color:#333333;">
+    int esci = 0;
+</pre>
+
+<p>and count how often iterated terms have length less than or equal to 2 inside the loop</p>
+
+<pre style="background-color:#333333;">
+        esci += int(length(zn) <= 2.0);
+</pre>
+
+we can then calculate an estimate of how quickly the sequence diverged.
+
+<pre style="background-color:#333333;">
+    float escp = float(esci) / float(ilimit);
+</pre>
+
+<p>We can then create a visual indicator of how quickly / slowly a complex number diverges under repeated iterations.</p>
+
+<pre style="background-color:#333333;">
+    gl_FragColor = float(in_R) * color1 + float(! in_R) * vec4(escp, 0, escp, 1);
+</pre>
+
+<div style="text-align: center;">
+  <img width="300" src="./divergence-tracking.png">
+</div>
+
+<p><em><u>Task:</u> Visually track the rate of divergence of repeated iterations by adding color as above.</em></p>
+
+<p>There is a slight hiccup though: many fractals do not seem to show much color. We can fix this by smoothing out the escape proportion (<code>escp</code>) calculation by adding logs. The difference can be dramatic, as the following two images (the first without logs, the second, with) show.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./fractal-before-logs.png">
+</div>
+
+<div style="text-align: center;">
+<img width="300" src="./fractal-after-logs.png">
+</div>
+
+<p><em><u>Task:</u> Apply log() to both the numerator and denominator of the <code>escp</code> calculation. Discover some pretty fractals. Take screenshots! If for whatever reason you got stuck today, the final fragment shader I made is available <a href="2-9.glsl">here</a>. (It requires uniforms to be set though.)</em></p>
+
+<p><em><u>Bonus task:</u> The Mandelbrot set is constructed slightly differently. If you have not made it before, look into its definition on the internet, and create it! If you have made it before, try constructing the <a href="https://en.wikipedia.org/wiki/Burning_Ship_fractal">burning ship</a> instead.</em></p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
