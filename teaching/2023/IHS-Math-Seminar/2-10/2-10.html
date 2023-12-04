@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-9 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-10</h1>
+      
+      <p>Date: 2023.12.04</p>
+
+      <p>Until this point in the course, we used other programs to visualize the graphics we made: In lessons <a href="..\2-1\2-1.html">2-1</a> and <a href="..\2-2\2-2.html">2-2</a> we made graphics in javascript and viewed them in a web browser; in lessons <a href="">2-3</a> through to <a href="">2-9</a> we wrote fragment shaders and viewed them via KodeLife. Today we will stop relying on other programs to view our graphics, and instead write a self-contained program that renders our graphics. We will start simple, an in particular make a window with the pattern below. We will do so by using a new(ish) and particularly nice systems programming language, <a href="https://odin-lang.org/">Odin</a>, and a simple yet powerful cross-language and platform graphics videogame development API, <a href="https://www.raylib.com/">raylib.</a></p>
+
+<div style="text-align: center;">
+  <img width="300" src="./2-10.png">
+</div>
+
+<p>Relying on corporate programs to view graphics can be dangerous, since there is no guarantee that the graphics-viewing program will be provided into the future. For example, if the company behind KodeLife (Hexler) went out of business, KodeLife might stop being supported.</p>
+
+<p>Creating our own programs running our shaders takes a bit more effort, but has some overwhelming positives including:</p>
+<ul>
+  <li>We have significantly more control over our graphics.</li>
+  <li>We can share our program however we want.</li>
+  <li>We can share our program whenever we want, in particular we can provide it into the future regardless of if companies like Hexler go out of business. </li>
+</ul>
+
+<h2>Step 1: Download the Odin compiler, then build and run a 'Hello world!' program</h2>
+
+<p>Odin is an alternative to the C programming language, <a href="https://odin-lang.org/">as described on its website</a>. While there is much to love about the C programming language, it has a <a href="https://eev.ee/blog/2016/12/01/lets-stop-copying-c/">large number of flaws</a>. In my view, Odin fixes almost all of the flaws of C. I've been using the language for more than two years now, and even though Odin is still in development and has not yet reached version 1.0, I consider it to be significantly better than C.</p>
+
+<p>Let's obtain a copy of the Odin compiler, and then compile a basic Odin program that prints "Hellope!" to a terminal. (This is an example of a "Hello World!" program.)</p>
+
+<p>Odin can be built from source, but this is can be a huge time sink if you've never done this before (especially if it is done without the <a href="https://ziglang.org/">Zig</a> build system), and ultimately unnecessary for today, so we'll just download the latest release.</p>
+
+<p><em><u>Task:</u> Go to the <a href="https://github.com/odin-lang/odin/releases">Odin releases page on Github</a> and download the appropriate <code>.zip</code> file depending on your operating system. Unzip the file, and extract it somewhere sensible. (For example, create a new folder titled <code>Odin</code> in the folder above your <code>Documents</code> folder, and extract the files there.)</em></p>
+
+<p>Now open up a terminal (e.g. On MS Windows launch "Windows Powershell", On Mac launch "Terminal", etc.) and run the following command.</p>
+
+<pre style="background-color:#333333;">
+odin version
+</pre>
+
+<p>You will likely get an error, and this probably happened because couldn't find the odin compiler. (That is, it couldn't find the <code>odin.exe</code> file in the extracted files.)</p>
+
+<p>We need to add <code>odin.exe</code> to our PATH. The instructions below explain how to do this on MS Windows. If you use a Mac or a computer running Linux, search the internet to figure out how to do add a folder to you path</p>
+
+<p>1. On Windows 11, open the utility which allows editing of account environmental variables.</p>
+
+<p>This can be done by searching something like <code>environment variables</code> from the start menu. NOTE: There is no need to change the <em>system</em> environmental variables, which is another option that can appear. I recommend just changing the local ones for your account.</p>
+
+<div style="text-align: center;">
+  <img width="400" src="./environmental-variables.png">
+</div>
+
+<p>2. Click on the <code>Path</code> environmental variable and then the <code>Edit...</code> button.</p>
+
+</p>3. A new window should spawn showing a list of file paths. Add a row containing the path the the folder containing <code>odin.exe</code> (i.e. the location of the extracted Odin compiler) then press the <code>OK</code> button (and then <code>OK</code> again to close the options).</p>
+
+<p>The Odin complier should now be accessible from any terminal program. Open up a <em>new</em> instance of a terminal, then type <code>odin help</code> and press enter. A list of important commands, along with brief descriptions should appear.</p>
+
+<p>Let's now use the compiler to create and run a program.</p>
+
+<p><em><u>Task:</u> Create a new folder somewhere on your computer, then create a new text file called <code>hellope.odin</code> containing the code below. Open a terminal in the folder (e.g. On Windows 11 right-click and select "Open in Terminal"), and then type the command <code>odin run .</code> and press enter. The result should output "Hellope!" like in the image below.</em></p>
+
+<pre style="background-color:#333333;">
+package main
+
+import "core:fmt"
+
+main :: proc() {
+	fmt.println("Hellope!")
+}
+</pre>
+
+      <div style="text-align: center;">
+        <img width="100" src="./hellope.png">
+      </div>
+
+<p>What just happened? The Odin compiler compiled our code into an executable (<code>.exe</code>) file, and then ran it for us. The command <code>odin build .</code> would have built the <code>.exe</code> file without running it. We can run the <code>.exe</code> at any time by typing in its name in the terminal and pressing enter or clicking on it.</p>
+
+<p>We now have a way to create our own programs! Instead of making a program that just prints text to the screen, let's create a program that draws an animated version of the image at the top of this page.</p>
+
+<h2>Step 2: Draw a square to the screen using raylib</h2>
+
+<p>In 2023 creating a program that draws graphics on the screen is waaay more complicated than it should be. In fact, official documentation about how to do this on MS Windows makes it look <a href="https://learn.microsoft.com/en-us/windows/win32/learnwin32/your-first-windows-program">outrageously complicated</a>.</p>
+
+<p>Raylib is a an API which amoung other things will enable us to spawn windows and put graphics on the screen without us having to write operating-system specific code to do this.</p>
+
+<p>Let us first make a digital homage to Malevich's iconic <a href="https://en.wikipedia.org/wiki/Black_Square_(painting)"><em>Black Square</em> (1915)</a> in Raylib.</p> The Odin code below should spawn a window with a gray background.</p>
+
+<pre style="background-color:#333333;">
+package blacksquare
+
+import rl "vendor:raylib"
+
+main :: proc() {
+    rl.InitWindow(1000, 1000, "Malevich homage")
+    defer rl.CloseWindow()
+
+    rl.SetTargetFPS(60)
+    
+    for ! rl.WindowShouldClose() {
+        rl.BeginDrawing()
+        rl.ClearBackground(rl.GRAY)
+        rl.EndDrawing()
+    }
+}
+</pre>
+
+<p><em><u>Task:</u> Save the code above in a file called <code>black-square.odin</code>, then build and run the code. (Open up a terminal, and use a similar build command to that above.) The result should look like the image below.</em></p>
+
+<div style="text-align: center;">
+  <img width="300" src="./gray-square.png">
+</div>
+
+<p>To finish our homage, we need to add a black square to the center of the image. There is a very simple procedure in raylib that does this.</p>
+
+<p><em><u>Task:</u> In the line before <code>rl.EndDrawing()</code> add the the line <code>rl.DrawRectangle(x,y,w,h,rl.BLACK)</code> but choose values of <code>x</code>, <code>y</code>, <code>w</code>, <code>h</code> to draw a square centered in the screen. Save the file, then compile and run the code to see the result.</p></em></p>
+
+<h2>Step 3: Use for loops to draw loads of squares with different colors</h2>
+
+As described in the <a href="https://odin-lang.org/docs/overview/#for-statement">overview</a>, for loops in Odin can be specified in several ways. By placing the <code>rl.DrawRectangle</code> procedure inside the following nested for loops</p>
+
+<pre style="background-color:#333333;">
+        for i := i32(1); i <= 3; i += 1 {
+            for j := i32(1); j <= 3; j += 1 {
+                rl.DrawRectangle(200 * i, 200 * j, 100, 100, rl.BLACK)
+            }
+        }
+</pre>
+
+<p>we get the following image.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./grid-squares.png">
+</div>
+
+<p>Instead of using a default color in the raylib library, we can easily define our own. Adding in the line</p>
+
+<pre style="background-color:#333333;">
+                square_color := rl.Color{70 * u8(i), 70 * u8(j), 100, 255}  
+</pre>
+
+<p>before the <code>rl.DrawRectangle</code> line and changing the rectangle color to <code>square_color</code> results in the following image.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./colorful-squares.png">
+</div>
+
+<p><em><u>Task:</u> Use for loops to create an program in Odin and raylib that renders an image similar to that at the top of the page.</em></p>
+
+<p>Finally, let us add in a time variable so that our graphics change over time. Odin has a standard library that contains procedures for dealing with time. We can access these with <code>time.(name of procedure)</code> once we add</p>
+<pre style="background-color:#333333;">
+import    "core:time"
+</pre>
+<p>near the top of the file. After we set the FPS, we can create a stopwatch, then start it, with</p>
+
+<pre style="background-color:#333333;">
+    watch : time.Stopwatch
+    time.stopwatch_start(&watch)
+</pre>
+
+<p>Within the <code>rl.WindowShouldClose()</code> loop, we can then create an offset based on the time with</p>
+
+<pre style="background-color:#333333;">
+        raw_duration := time.stopwatch_duration(watch)
+        seconds := f32(time.duration_seconds(raw_duration))
+        offset := u8(20 + 20 * math.sin(3 * seconds))
+</pre>
+
+<p>We can now have a variable (<code>offset</code>) which varies periodically with time.</p>
+
+<p><em><u>Final Task:</u> Create a variable that varies with time, and use it to make the color of the squares vary over time.</em></p>
+
+<p>Next time, we will use raylib to use draw several of the fragment shaders we created in previous lessons.</p>
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
