@@ -23,7 +23,7 @@
       
       <p>Date: 2023.12.08</p>
 
-      <p>By the end of the previous lesson most people were able to compile Odin programs, so this morning we'll continue where <a href="..\2-10\2-10.html">lesson 2-10</a> ended. If you are not yet at this stage, continue following the <a href="http://odin-lang.org/docs/install/">installation instructions</a> on the Odin website.</p>
+      <p>By the end of the previous lesson most people were able to compile Odin programs, so this morning we'll continue where <a href="../2-10/2-10.html">lesson 2-10</a> ended. If you are not yet at this stage, continue following the <a href="http://odin-lang.org/docs/install/">installation instructions</a> on the Odin website.</p>
 
       <p>Recall that in lesson 2-10 we called some <a href="https://www.raylib.com/">raylib</a> procedures to draw a grid of squares with different colors. How exactly did raylib draw these? It used a shader, and since it was the default shader, we didn't need to specify it. But we can use our own fragment shaders if we want to! We'll do this today, and in the process combine them to create a showcase of the shaders we've written so far. In particular, we'll create a program that looks like the screenshot below.</p>
 
@@ -33,7 +33,7 @@
 
 <h2>Step 1: Draw a rectangle in Odin (using raylib) that displays our gradient shader</h2>
 
-      <p>In <a href="..\2-3\2-3.html">lesson 2-3</a> we made a gradient shader like the following.</p>
+      <p>In <a href="../2-3/2-3.html">lesson 2-3</a> we made a gradient shader like the following.</p>
 
 <pre style="background-color:#333333;">
 #version 330
@@ -56,7 +56,7 @@ void main(void)
 
       <p>First, let's set up our project with Odin/raylib code that spaws a window with graphics.</p>
 
-      <p><em><u>Task:</u> Create a new file called <code>four-shader.odin</code> in the folder that contains <code>color-gradient.glsl</code>, and fill it with the the code from  <a href="..\2-10\2-10.html">lesson 2-10</a> that spawned a gray window. Recall that the Odin code can be compiled and run with the command <code>odin run .</code> called from within the folder.</em></p>
+      <p><em><u>Task:</u> Create a new file called <code>four-shader.odin</code> in the folder that contains <code>color-gradient.glsl</code>, and fill it with the the code from  <a href="../2-10/2-10.html">lesson 2-10</a> that spawned a gray window. Recall that the Odin code can be compiled and run with the command <code>odin run .</code> called from within the folder.</em></p>
 
       <p>Now let's fill the window with colors determined by our shader. To do so, we need to have access to our fragment shader code from within our Odin code. The easiest way to do this is to import the fragment shader as a string at compile-time using <code>#load</code>. I typically include this line between the first line and the start of the <code>main</code> procedure.
 
