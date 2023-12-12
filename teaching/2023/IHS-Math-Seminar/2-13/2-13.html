@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-13 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>    
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-13</h1>
+      
+      <p>Date: 2023.12.12</p>
+
+      <p>In the last four lessons of this seminar, we will explore three-dimensional graphics. We'll begin this exploration by making the following animation of a tetrahedron from scratch (click to play).</p>
+
+      <div style="text-align: center;">
+        <video controls width="500" src="./2-13.mp4" type="video/mp4" autoplay="true">
+        </video>
+      </div>
+      
+<h2>Step 1: Draw some cubes</h2>
+
+      <p>In the last couple of lessons we've written our own self-contained 2D graphics programs in Odin/raylib. Raylib also has very helpful procedures to help us make 3D graphics, some of which we'll use today.</p>
+
+      <p>3D graphics usually requires a virtual camera, which was something we didn't need to worry about in the 2D world. Camera code is extremely important, but something the vast majority of programmers are afraid to write (or even look into) because they think the mathematics involved is too complicated. In reality, the mathematics is just basic linear algebra, and therefore not nearly as bad as people make it out to be.</p>
+
+      <p>This said, camera code does take time to figure out and right from scratch (and certainly more time than the 47 minutes we have today). As such, we'll use raylib's camera procedures today to set up a 3D rendering environment, although we may look into this later in the course (time permitting).</p>
+
+      <p>Cameras in raylib are simple to define. We only need to specify:</p>
+      <ul>
+        <li>the location of the camera,</li>
+        <li>where the camera points,</li>
+        <li>which direction is up,</li>
+    <li>the camera's field of view (fov),</li>
+<li>the type of projection the camera is doing.</li>
+</ul>
+
+<p>Once these values are set, it rendering a scene in Odin/raylib is relatively simple.</p>
+
+<pre style="background-color:#333333;">
+package tetrahedron
+
+import rl "vendor:raylib"
+
+main :: proc() {
+    rl.InitWindow(1000,1000,"Cube")
+    defer rl.CloseWindow()
+
+    camera1 := rl.Camera3D{
+        position   = {2, 2, 2},
+        target     = {0, 0, 0},
+        up         = {0, 1, 0},
+        fovy       = 45,
+        projection = rl.CameraProjection.PERSPECTIVE,
+    }
+
+    rl.SetTargetFPS(60)
+
+    for ! rl.WindowShouldClose() {
+
+        rl.BeginDrawing()
+        rl.BeginMode3D(camera1)
+        rl.ClearBackground(rl.GRAY)
+
+        rl.DrawGrid(10, 1)
+        rl.DrawCubeV({0,0,0}, 0.5 * {1,1,1}, rl.BLACK)
+
+        rl.EndMode3D()
+        rl.EndDrawing()
+    }
+}
+</pre>
+
+<p>The code above, when compiled and ran, produces the following image.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./cube.png">
+</div>
+
+      <p><em><u>Task:</u> Create a new folder on your computer for the graphics project today, and in the folder save the code above to a file with the file extension <code>.odin</code> Compile and run the code to recreate the image above.</em></p>
+
+      <p>Before we try attempting to create a tetrahedron, we should ask ourselves a basic question: in what direction do the axes point in raylib? We can easily answer this by adding additional cubes to our image. We can draw a red cube at the coordinate (1,0,0) by adding the following line to the drawing section of the code.</p>
+
+<pre style="background-color:#333333;">
+        rl.DrawCubeV({1,0,0}, 0.5 * {1,1,1}, rl.RED)
+</pre>
+
+<div style="text-align: center;">
+  <img width="300" src="./red-cube.png">
+</div>
+
+      <p><em><u>Task:</u> Add a green and blue cube to the scene at the coordinates (0,1,0) and (0,0,1) respectively. Given that the camera is at position (2,2,2) and looking towards the origin, what is the equation of the plane drawn in the background?</em></p>
+
+      <h2>Step 2: Animate the camera</h2>
+
+      <p>Now we have a better understanding of raylib's default coordinate axes, we can change the position of the camera to give us more interesting angles. Changing the position of <code>camera1</code> from (2,2,2) to (0, 1, 5), for example, produces the following image.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./cubes-015.png">
+</div>
+
+      <p>But even with a change in perspective like this, the 3D geometry being drawn is hard to see without the animation being dynamic, so let's make the camera move over time. In lessons <a href="..\2-10\2-10.html">2-10</a> and <a href="..\2-11\2-11.html">2-11</a> we added a stopwatch to our Odin code to create a time variable (<code>seconds</code>), which we then used to make our graphics dynamic. By adding in a stopwatch to our code (like in earlier lessons), we can make the vertical position of the camera depend on the time, as illustrated in the video below (click to play).</p>
+
+
+<div style="text-align: center;">
+  <video controls width="500" src="./vertical-changes.mp4" type="video/mp4" autoplay="true">
+  </video>
+</div>
+
+<p>This is easy to implement; provided we import Odin's standard math library near the top of the file with the line</p>
+
+<pre style="background-color:#333333;">
+import m "core:math"
+</pre>
+
+<p>we only need to update the position of the camera inside the main <code>rl.WindowShouldClose()</code> loop before we start drawing with the following line.</p>
+
+<pre style="background-color:#333333;">
+        camera1.position = {0, m.sin(f32(2 * seconds)), 5}
+</pre>
+
+      <p>These is no reason to stop here though. We can also change the horizontal location of the camera. Let's put the camera on a circle, and have it rotate around the objects with time as illustrated below (click to play).</p>
+
+<div style="text-align: center;">
+  <video controls width="500" src="./horizontal-changes.mp4" type="video/mp4" autoplay="true">
+  </video>
+</div>
+
+<p><em><u>Task:</u> Add in a stopwatch, and as above, animate the vertical position of the camera. Then make the camera loop around the cubes. (Hint: put the camera on a circle parametrized by time.)</em></p>
+
+<h2>Step 3: Draw a tetrahedron</h2>
+
+      <p>Today, GPUs are pretty great at drawing triangles, and basically every graphics API provides a way to draw heaps of triangles at once. Drawing a tetrahedron only requires that we draw a tiny number of triangles though, so to simplify things, we can draw single triangles in raylib with the following procedure.</p>
+
+<pre style="background-color:#333333;">
+        rl.DrawTriangle3D({1,0,0}, {0,1,0}, {0,0,1}, rl.YELLOW)
+</pre>
+
+      <p><em><u>Task:</u> Add the line above to the drawing code, and observe the result. Does anything strange happen?</em></p>
+
+      <p>Bizarrely, the triangle seems to disappear whenever the camera is facing one of the sides. This is due to the order in which the corners of the triangles are specified relative to the camera changing. This is an extremely annoying 'feature' of raylib, but it is too much of a tangent to go into why raylib does this.</p>
+
+      <p>For a simple program such as ours, we can fix this issue by doing something fairly crude yet effective: drawing each triangle twice, but with different corner orderings. We can define a simple procedure in Odin to do this for us.</p>
+
+<pre style="background-color:#333333;">
+draw_triangle :: proc(a, b, c : Vec3, color : rl.Color) {
+    rl.DrawTriangle3D(a, b, c, color)
+    rl.DrawTriangle3D(a, c, b, color)
+}      
+</pre>
+
+      <p>We can now just use <code>draw_triangle</code> and not worry about triangles disappearing! Note that in the procedure declaration we've used the type <code>Vec3</code> instead of raylib's usual 3D vector type (<code>rl.Vector3</code>) since the word <code>Vec3</code> is significantly more readable and efficient than <code>rl.Vector3</code>. However, we need to tell the compiler that <code>Vec3</code> is just another name for <code>rl.Vector3</code>. Adding the following line in the top of the file before <code>main</code> does this.</p>
+
+<pre style="background-color:#333333;">
+Vec3 :: rl.Vector3
+</pre>
+
+      <p>Finally, let's draw a tetrahedron! Using the equilateral triangle calculation we did way back in lesson <a href="..\2-2\2-2.html">2-2</a>, we can define the points of a base of a tetrahedron with</p>
+
+<pre style="background-color:#333333;">
+        SQRT3 :: 1.732051
+        p1 := Vec3{1, 0, 0}
+        p2 := Vec3{-0.5, 0, 0.5 * SQRT3}
+        p3 := Vec3{-0.5, 0, -0.5 * SQRT3}
+</pre>
+
+<p>and then use our new procedure to draw it.</p>
+<pre style="background-color:#333333;">
+        draw_triangle(p1, p2, p3, rl.YELLOW)
+</pre>
+
+<p>If we remove the code drawing the cubes and the other triangle, we get something that looks like the following.</p>
+
+<div style="text-align: center;">
+  <img width="300" src="./tetrahedron-base.png">
+</div>
+
+      <p>If we can calculate the final coordinate of the tetrahedron, we can then draw the other three sides.</p>
+      
+<p><em><u>Final Task:</u> Using the code above and the calculation from lesson <a href="..\2-11\2-11.html">2-11</a>, create an animation of tetrahedron like that at the top of this page.</em></p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
