@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <title>IHS Seminar 2-16 2023</title>
+    <link rel="stylesheet" type="text/css" href="../../../../style.css">
+    <link rel="icon" href="./../torus-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="../../../../index.html">Home</a></li>
+          <li><a href="../../../../research/research.html">Research</a></li>
+          <li><a href="../../../../teaching/teaching.html">Teaching</a></li>
+          <li><a href="../../../../misc/misc.html">Miscellaneous</a></li>
+          <li><a href="../../../../blog/blog.html">Blog</a></li>
+        </ul>
+      </nav>
+    </header>
+    <article>
+      <h1>Ithaca High School Math Seminar Lesson 2-16</h1>
+      
+      <p>Date: 2023.12.20</p>
+
+      <ul>
+        <li><a href="final-slides.pdf">Course Conclusion slides (.pdf)</a></li>
+      </ul> 
+      <p>We've come to the end of the course! With the holiday season nearly here, let's use what we've learned so far to make something reminiscent of the holidays like the star below (click to play).</p>
+
+      <div style="text-align: center;">
+        <video controls width="500" src="./2-16.mp4" type="video/mp4" autoplay="true">
+        </video>
+      </div>
+      
+      <h2>Goal: Make a 3D Star</h2>
+
+      <p>If you want to use the same colors as above, I used the default raylib colors <code>rl.GOLD</code> and <code>rl.YELLOW</code> (after importing <code>"vendor:raylib"</code> as <code>rl</code>).</p>
+
+      <p>Some hints: you only need to define four corners and two triangles, and let rotations take care of the rest. Specifically, I defined the north spoke of the star to be</p>
+
+<pre style="background-color:#333333;">
+SQRT3 :: 1.73205
+
+P0 :: Vec3{ 0,  1,  0}
+P1 :: Vec3{-1,  0,  ???}
+P2 :: Vec3{ 1,  0,  ???}
+P3 :: Vec3{ 0,  0,  ???}
+
+Spoke_Triangles := [2] Triangle{
+    {P0, P2, P3, rl.GOLD},
+    {P0, P1, P3, rl.YELLOW},
+}
+</pre>
+
+      <p>(but with values for <code>???</code> you need to figure out) and then drew each triangle six times, after rotation around the y-axis by a multiple of a certain angle. Feel welcome to adapt the code from <a href="../2-14/2-14.html">lesson 2-14</a> to do this.</p>
+
+      <p><em><u>Final task:</u> Make a 3D star (or something else) to commemorate the end of the year (and for finishing this course)!</em></p>
+
+    </article>
+    <footer>
+      <p>Benjamin Thompson, 2023.</p>
+    </footer> 
+  </body>
+</html>
